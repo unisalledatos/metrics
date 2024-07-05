@@ -1,0 +1,24 @@
+---
+title: "Taller 2"
+author: "Econometría"
+format: pdf
+editor: visual
+execute: 
+  echo: false
+  include: false
+---
+
+1. Considere la siguiente función de ahorro
+
+$$sav=\beta_0 + \beta_1 inc+u, \hspace{0.5cm}u=\sqrt{inc}\cdot e$$
+
+donde $e$ es una variable aleatoria con $\mathbb{E}=0$ y $\text{Var}(e)=\sigma^2_e$. Asuma que $e$ es independiente de $inc$.
+
+- Muestre que $\mathbb{E}(u|inc)=0$.
+- Muestre que $\text{Var}(u|inc)=\sigma^2_{inc}$.
+
+2. Desarrolle el punto C4 del libro de Wooldridge.
+3. Según el método de momentos cómo podría estimarse $\sigma_{xy}=\mathbb{E}[(X-\mu_x)(Y-\mu_y)]$. ¿El estimador sugerido es insesgado y consistente?
+4. Construya un estimador para el coeficiente de correlación empleando el método de momentos. Determine si es insesgado y si es consistente.
+
+5. Demuestre que $\text{MSE}(W)=\text{Var}(W)+[\text{Bias}(W)]^2$.

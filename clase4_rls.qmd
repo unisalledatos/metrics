@@ -1,0 +1,259 @@
+---
+title: "Regresión lineal simple"
+author: "Carlos Ortiz"
+format: pdf
+editor: visual
+execute: 
+  echo: false
+  include: false
+---
+
+Usualmente, en econometría se trabaja con tres tipos de estructuras de datos:
+
+- Sección cruzada
+- Datos longitudinales
+- Series de tiempo
+
+```{r include=TRUE}
+# Set up the plotting layout
+par(mfrow = c(3, 1), mar = c(4, 4, 2, 2) + 0.1)
+
+# Cross-Section Data
+countries <- c("USA", "Canada", "UK", "Germany", "France", "Japan", "Australia")
+gdp_per_capita <- runif(length(countries), 30000, 60000)
+cross_section_data <- data.frame(Country = countries, GDP_per_Capita = gdp_per_capita)
+
+barplot(cross_section_data$GDP_per_Capita, names.arg = cross_section_data$Country,
+        col = "skyblue", main = "Cross-Section Data",
+        xlab = "Country", ylab = "GDP per Capita", border = "white")
+
+# Time Series Data
+years <- 2000:2020
+gdp_usa <- 40000 + 2000 * (years - 2000) / 20 + rnorm(length(years), 0, 2000)
+time_series_data <- data.frame(Year = years, GDP_per_Capita = gdp_usa)
+
+plot(time_series_data$Year, time_series_data$GDP_per_Capita, type = "l",
+     col = "blue", lwd = 2, main = "Time Series Data",
+     xlab = "Year", ylab = "GDP per Capita")
+
+# Panel Data
+panel_data <- expand.grid(Country = countries, Year = years)
+panel_data$GDP_per_Capita <- 30000 + 500 * (panel_data$Year - 2000) + 
+  runif(nrow(panel_data), 0, 10000)
+
+plot(NULL, xlim = c(min(panel_data$Year), max(panel_data$Year)),
+     ylim = c(min(panel_data$GDP_per_Capita), max(panel_data$GDP_per_Capita)),
+     xlab = "Year", ylab = "GDP per Capita", main = "Panel Data")
+colors <- rainbow(length(countries))
+for (country in countries) {
+  lines(panel_data$Year[panel_data$Country == country], 
+        panel_data$GDP_per_Capita[panel_data$Country == country],
+        col = colors[which(countries == country)], lwd = 2)
+}
+legend("topright", legend = countries, col = colors, lwd = 2, bty = "n")
+
+
+```
+
+Empezaremos con sección cruzada: una foto en un momento del tiempo. Para mantener simple el análisis en un principio, estudiaremos la relación entre dos variables.
+
+## Regresión lineal simple: el modelo
+
+Se tiene la siguiente ecuación
+
+$$y=\beta_0+\beta_1x+u$$
+donde $y$ es la variable dependiente, $x$ es la variable independiente y $u$ es el término de error. La variable $y$ es lo que queremos explicar, $x$ es la variable con la cual explicamos $y$ y $u$ son todos aquellos elementos que explican a $y$, diferentes de $x$. $\beta_0$ es el intercepto y $\beta_1$ es la pendiente. Esta se conoce como la función de regresión poblacional. Si $\Delta u =0$, es decir, si el resto de los factores se mantiene constante, la variación vendrá dada por
+
+$$\Delta y =\beta_1 \Delta x$$
+Esto podría tomarse como algo ingenuo. En algunas ocasiones se podría estar interesado en rendimientos crecientes a escala en lugar de efectos constantes. Deben realizarse algunos supuestos.
+
+Para que se cumpla la variación se tiene que hacer un supuesto sobre la relación entre $x$ y $u$. Antes de eso, es necesario realizar un supuesto sin pérdida de generalidad sobre $u$:
+
+$$\mathbb{E}(u)=0$$
+
+Ahora, esto no dice nada sobre la relación entre $u$ y $x$ pero ya podemos trabajar en eso. Diremos que, para poder realizar la interpretación del efecto de $x$ en $y$ manteniendo el resto de los factores constantes, entonces
+
+$$\mathbb{E}(u|x)=\mathbb{E}(u)$$
+
+es decir, $u$ y $x$ son independientes. Por tanto
+
+$$\mathbb{E}(y|x)=\beta_0+\beta_1 x$$
+
+## Estimación por mínimos cuadrados ordinarios (MCO)
+
+Primero haremos una estimación empleando el **método de momentos**. Sea $\{(x_i,y_i); i=1,...,n\}$ una muestra aleatoria de tamaño $n$ de la población. Como los datos provienen de la población se puede escribir
+
+$$y_i=\beta_0+\beta_1x_i+u_i$$
+para cada $i$. A partir de los supuestos anteriores
+
+$$\text{Cov}(x,u)=\mathbb{E}(xu)=0$$
+$$E(u)=0$$
+Sustituyendo el valor de $u$ de la función de regresión poblacional se tiene
+
+$$\mathbb{E}[x(y-\beta_0-\beta_1x_i)]=0$$
+$$\mathbb{E}(y-\beta_0-\beta_1x_i)=0$$
+Utilizando los momentos conocidos, se tiene
+
+$$n^{-1}\sum_{i=1}^n(y_i-\hat{\beta}_0-\hat{\beta}_1x_i)=0$$
+$$n^{-1}\sum_{i=1}^nx_i(y_i-\hat{\beta}_0-\hat{\beta}_1x_i)$$
+Despejando se llega a
+
+$$\hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}$$
+$$\hat{\beta}_1=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2}$$
+
+Si se emplean mínimos cuadrados, el resultado es el mismo. Con las estimaciones $\hat{\beta}_0$ y $\hat{\beta}_1$ se tiene la función de regresión muestral
+
+$$\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 x_i$$
+donde $\hat{\beta}_1=\frac{\Delta \hat{y}}{\Delta x}$. Esto en R es bastante simple. 
+
+```{r include=TRUE}
+
+# Configurar semilla para reproducibilidad
+set.seed(123)
+
+# Generar datos
+n <- 1000
+x <- runif(n, -10, 10)
+u <- rnorm(n, mean = 0, sd = 4)
+y <- 4 + 3 * x + u
+
+# Ajustar el tamaño de la ventana gráfica para dos gráficos lado a lado
+par(mfrow = c(1, 2), mar = c(4, 4, 2, 1) + 0.1)
+
+# Colores y transparencias
+col_points <- rgb(0, 0, 139, maxColorValue = 255, alpha = 128) # Azul oscuro con opacidad 0.5
+
+# Gráfico 1: Dispersión de todos los datos con la línea E(y|x) = 4 + 3x
+plot(x, y, main = "Población",
+     xlab = "x", ylab = "y", pch = 16, col = col_points, cex = 0.5)
+abline(a = 4, b = 3, col = "black", lwd = 2, lty = 2)
+text(-9, 25, "E(y|x) = 4 + 3x", col = "black", pos = 4)
+
+# Tomar una muestra de 200 datos de la población
+set.seed(124)
+sample_indices <- sample(1:n, 200)
+x_sample <- x[sample_indices]
+y_sample <- y[sample_indices]
+
+# Ajustar un modelo lineal a la muestra
+fit <- lm(y_sample ~ x_sample)
+
+# Gráfico 2: Dispersión de la muestra con la línea de regresión estimada
+plot(x_sample, y_sample, main = "Muestra",
+     xlab = "x", ylab = "y", pch = 16, col = col_points, cex = 0.5)
+abline(fit, col = "black", lwd = 2, lty = 2)
+equation <- bquote(hat(y)[i] == .(round(coef(fit)[1], 2)) + .(round(coef(fit)[2], 2)) * x[i])
+text(-9, 25, equation, col = "black", pos = 4)
+
+# Resetear el layout gráfico
+par(mfrow = c(1, 1))
+```
+
+### Propiedades algebraicas de MCO
+
+Como punto de partida hay que generar los valores ajustados a partir de la ecuación 
+
+$$\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_i$$
+Dentro de estas propiedades, por definición, se tiene
+
+$$\sum_{i=1}^n \hat{u}_i=0$$
+$$\sum_{i=1}^nx_i\hat{u}_i=0$$
+$$y_i=\hat{y}_i+\hat{u}_i$$
+Con estas propiedades se pueden definir la suma de cuadrados totales (SST), la suma de cuadrados de los residuos (SSR) y la suma de cuadrados explicados (SSE):
+
+\begin{align*}
+\text{SST} =&\sum_{i=1}^n(y_i-\bar{y})^2\\
+\text{SSE} =&\sum_{i=1}^n(\hat{y}_i-\bar{y})^2\\
+\text{SSR} =&\sum_{i=1}^n(\hat{u}_i)^2\\
+\end{align*}
+
+Teniendo presente que $SST=SSE+SSR$.
+
+### Bondad de ajuste
+
+$$R^2=1-\frac{SSR}{SST}\equiv \frac{SSE}{SST}$$
+
+El $R^2$ mide la fracción de la varianza muestral de $y$ que es explicada por $x$.
+## Unidad de medida y forma funcional
+
+| Modelo    | Forma de $y$ |Forma de $x$|Efecto|
+|:--------:|:----:|:----:|:-----:|
+| nivel-nivel     | $y$  |    $x$     |$\Delta y=\beta_1 \Delta x$|
+| nivel-log   | $y$  |    $\log(x)$  |$\Delta y=(\beta_1/100)\% \Delta x$|
+| log-nivel     | $\log(y)$  |   $x$   |$\%\Delta y=(100\cdot\beta_1) \Delta x$|
+| log-log     | $\log(y)$  |    $\log(x)$   |$\%\Delta y=\beta_1 \%\Delta x$|
+
+
+## Valor esperado y varianza en MCO
+
+¿Por qué utilizar los estimadores de $\beta_0$ y de $\beta_1$ encontradas? Si se cumplen una serie de supuestos, son los mejores estimadores que se pueden emplear.
+
+1. Linealidad en los parámetros: en el modelo poblacional, la variable dependiente $y$ está relacionada con la variable independiente $x$ y el error $u$ de la forma
+
+$$y=\beta_0+\beta_1 x + u$$
+donde $\beta_0$ y $\beta_1$ son los parámetros de intercepto y pendiente, respectivamente.
+
+2. Muestra aleatoria: se tiene una muestra aleatorio de tamaño $n$, $\{(x_i,y_i):i=1,2,...,n\}$, que sigue la función poblacional anterior. Se puede entonces reescribir a la función poblacional en términos de la muestra
+
+$$y_i=\beta_0+\beta_1 x_i + u\hspace{0.3cm}i=1,2,...,n$$
+3. Variación muestral de la variable explicativa: la muestra de $x$ no es constante.
+4. Media condicional cero:
+
+
+$$\mathbb{E}(x|u)=0$$
+5. Homocedasticidad: el error $u$ tiene la misma varianza dado cualquier valor de la variable explicativa
+
+$$\text{Var}(x|u)=\sigma^2$$
+
+### Insesgamiento de MCO
+
+Bajo los primeros cuatro supuestos se puede demostrar que los estimadores son insesgados.
+
+$$\mathbb{E}(\hat{\beta}_0)=\beta_0, \hspace{0.5cm}\mathbb{E}(\hat{\beta}_1)=\beta_1$$
+
+### Varianza de MCO
+
+Cuando se incluye el quinto supuesto, se tiene además que
+
+$$\mathbb{E}(y|x)=\beta_0 +\beta_1 x$$
+$$\text{Var}(y|x)=\sigma^2$$
+
+Adicionalmente, la varianza de los estimadores sería
+
+$$\text{Var}(\hat{\beta}_1)=\frac{\sigma^2}{\sum_{i=1}^n(x_i-\bar{x})^2}$$
+
+$$\text{Var}(\hat{\beta}_0)=\frac{\sigma^2n^{-1}\sum_{i=1}^nx_i^2}{\sum_{i=1}^n(x_i-\bar{x})^2}$$
+
+Teniendo en cuenta que 
+
+$$\hat{\sigma}^2=\frac{1}{n-2}\sum_{i=1}^n\hat{u}_i^2=\frac{SSR}{n-2}$$
+
+## Regresión a través del origen y regresión en una constante
+
+En algunos casos, se puede buscar imponer una restricción del tipo $x=0$, el valor esperado de $y$ será igual a 0. Se plantea entonces una función diferente
+
+$$\tilde{y}=\tilde{\beta}_1 x$$
+El obtener esta ecuación se conoce como regresión a través del origen porque la línea pasa a través del punto $x=0$, $\tilde{y}=0$. Para calcular la pendiente se puede recurrir a mínimos cuadrados ordinarios.
+
+$$\sum_{i=1}^n(y_i-\tilde{\beta}_1x_i)^2$$
+
+
+$$\sum_{i=1}^n x_i(y_i-\tilde{\beta}_1x_i)=0$$
+
+$$\tilde{\beta}_1=\frac{\sum_{i=1}^n x_iy_i}{\sum_{i=1}^n x_i^2}$$
+
+```{r include=TRUE}
+# Simulated data
+set.seed(123)  # for reproducibility
+x <- rnorm(100)
+y <- 2 * x + rnorm(100)
+
+# Regression through the origin
+model <- lm(y ~ x - 1)
+
+# Plotting results
+plot(x, y, main = "Regression Through the Origin", xlab = "x", ylab = "y")
+abline(model, col = "blue", lwd = 2)
+text(x = 0, y = max(y), labels = "y = bx", pos = 4, col = "blue", font = 2)
+
+```

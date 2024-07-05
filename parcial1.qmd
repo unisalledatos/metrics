@@ -1,0 +1,35 @@
+---
+title: "Parcial 1"
+author: "Econometría"
+format: pdf
+editor: visual
+execute: 
+  echo: false
+  include: false
+---
+
+1. Considere el modelo de regresión simple estándar $y=\beta_0+\beta_1 x+u$ bajo los supuestos vistos en clase. Los estimadores de MCO $\hat{\beta}_0$ y $\hat{\beta}_1$ son insesgados con respecto a sus parámetros poblacionales. Sea $\tilde{\beta}_1$ el estimador de $\beta_1$ obtenido asumiendo que el intercepto es 0.
+
+- Encuentre $\mathbb{E}(\tilde{\beta}_1)$ en términos de $x_i$, $\beta_0$ y $\beta_1$. Verifique que $\tilde{\beta}_1$ es insesgado para $\beta_1$ si el valor poblacional del intercepto ($\beta_0$) es cero.
+- Encuentre la varianza de $\tilde{\beta}_1$.
+
+2. Interpretación de 10 modelos con $R^2$
+
+3. Sea $Y_1, Y_2, Y_3$ y $Y_4$ variableas aleatorias, independientes e idénticamente distribuidas de una población con media $\mu$ y varianza $\sigma^2$. Sea $\bar{Y}=\frac{1}{4}(Y_1+ Y_2+ Y_3+Y_4)$ el promedio de estas cuatro variables aleatorias.
+
+- ¿Cuál es el valor esperado y la varianza de $\bar{Y}$ en términos de $\mu$ y $\sigma^2$.
+- Condiere un estimador diferente de $\mu$. 
+$$W=\frac{1}{8}Y_1+\frac{1}{8}Y_2+\frac{1}{4}Y_3+\frac{1}{2}Y_4$$
+
+Demuestre que $W$ es también un estimador insesgado de $\mu$. Encuentre la varianza de $W$.
+
+- ¿Cuál de los dos sería mejor: $W$ o $\bar{Y}$?
+
+4. Sea $Y$ una variable aleatoria de Bernoulli con $0<\gamma<1$. Suponga que se está interesado en calcular los odds ratio: $\gamma=\theta/(1-\theta)$. Dada una muestra aleatoria $\{Y_1,...,Y_n\}$, sabemos que el estimador insesgado y consistente de $\theta$ es $\bar{Y}$, la proporción de éxitos de $n$ intentos. Un estimador natural de $\gamma$ sería $G=\bar{Y}/(1-\bar{Y})$, la proporción de éxitos sobre la proporción de fallos en la muestra.
+
+- ¿Es el estimador insesgado?
+- ¿Es el estimador de $G$ consistente?
+
+5. Sea la ecuación de regresión poblacional $y=\beta_0+\beta_1 x + u$. Obtenga el estimador de mínimos cuadrados de $\beta_1$ y demuestre que $\hat{\beta}_1$ es un estimador insesgado para $\beta_1$. 
+
+6. Demuestre que los tres métodos de estimación para estimar $\mu$ resultan en el mismo estimador: $\bar{Y}=\frac{1}{n}\sum_{i=1}^n Y_i$. Para MLE asuma una función de densidad normal. 

@@ -1,0 +1,67 @@
+---
+title: "Taller 1"
+author: "Econometría"
+format: pdf
+editor: visual
+execute: 
+  echo: false
+  include: false
+---
+
+1. Emplee `R` para comprobar los siguientes enunciados:
+
+- $\sum_{i=1}^n(x_i/y_i)\neq \left(\sum_{i=1}^n x_i\right)\bigg/\left(\sum_{i=1}^n y_i\right)$
+- $\sum_{i=1}^n d_i = 0$
+
+2. Demuestre analíticamente los siguientes enunciados:
+
+- $\sum_{i=1}^n(x_i-\bar{x})^2=\sum_{i=1}^nx_i^2 -n(\bar{x})^2$
+- $\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})=\sum_{i=1}^nx_i(y_i-\bar{y})=\sum_{i=1}^n(x_i-\bar{x})y_i$
+
+3. Obtenga las derivadas parciales con respecto a todas las variables de la siguiente función 
+
+$$y=5+4x_1+x_1^2-3x_2+7x_1x_2$$
+4. Demuestre que $\text{Var}(X)=E(X^2)-\mu^2$ si $\mathbb{E}(X)=\mu$.
+5. Sea $Z$ una variable estandarizada, demuestre que $\mathbb{E}(Z)=0$ y $\text{Var}(Z)=1$.
+6. Demuestre que $\text{Cov}(X,Y)=\mathbb{E}(XY)-\mathbb{E}(X)\mathbb{E}(Y)$.
+7. Sea $\mathbf{X}$ una matriz de tamaño $n\times k$ con $\text{rank}(\mathbf{X})=k$. Se tienen las matrices
+
+$$\mathbf{P}\equiv \mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}$$
+$$\mathbf{M}\equiv \mathbf{I}_n-\mathbf{X}(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}=\mathbf{I}_n-\mathbf{P}$$
+8. Demuestre que las matrices $\mathbf{P}$ y $\mathbf{M}$ son simétricas e idempotentes. ¿Qué rango tiene cada matriz?
+
+9. Encuentre el producto de $\mathbf{AB}$ con
+
+$$\mathbf{A}=\begin{bmatrix}
+2 & -1 & 7 \\
+-4 & 5 & 0
+\end{bmatrix},\hspace{0.5cm}\mathbf{B}=\begin{bmatrix}
+0 & 1 & 6 \\
+1 & 8 & 0 \\
+3 & 0 & 0
+\end{bmatrix}$$
+
+10. Calcule $E(XY+2X^2|X)$
+
+11. Si $X\sim Normal(1,9)$ y $Y=2X+3$, ¿Cómo está distribuida $Y$?
+
+12. Si se tienen las variables aleatorias $X_1, X_2$ y $X_3$, cada una con una distribución $Normal(\mu, \sigma^2)$. Sea $W=X_1 + 2X_2 - 3X_3$. ¿Cómo se distribuye $W$?
+
+13. Sea $X\sim Normal(5,4)$. Encuentre las probabilidades de los siguientes eventos:
+- $P(X\leq 6)$
+- $P(X>4)$
+- $P(|X-5|>1)$
+
+14. Si se tienen las variables aleatorias (iid) $Y_1,Y_2,...,Y_n$ con media $\mu$ y varianza $\sigma^2$, demuestre que 
+
+$$\bar{Y}=n^{-1}\sum_{i=1}^n Y_i$$
+es un estimador insesgado de $\mu$, y que
+
+$$S^2=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\bar{Y})^2$$
+es un estimador insesgado de $\sigma^2$.
+
+15. Demuestre que los tres métodos de estimación para estimar $\mu$ resultan en el mismo estimador: $\bar{Y}=\frac{1}{n}\sum_{i=1}^n Y_i$. Para MLE asuma una función de densidad normal. 
+
+
+
+

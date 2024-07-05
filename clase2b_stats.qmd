@@ -1,0 +1,516 @@
+---
+title: "Estadística matemática"
+author: "Carlos Ortiz"
+format: pdf
+editor: visual
+execute: 
+  echo: false
+  include: false
+---
+
+## Población, parámetros y muestreo aleatorio
+
+La inferencia estadística implica aprender algo sobre una población dado la disponibilidad de una muestra de esa población. Por **población**, hacemos referencia a un grupo bien definido de sujetos (individuos, empresas, ciudades). Por aprender hacemos referencia a un grupo amplio dividido en las categorías de estimación y pruebas de hipótesis.
+
+### Muestreo
+
+Sea $Y$ una variable aleatoria que representa una población con una función de densidad de probabilidad $f(y;\theta)$ la cual depende de un único parámetro $\theta$. Se asume que la función $f$ es conocida excepto por el parámetro $\theta$. Estamos interesados en ese valor. El esquema más simple de muestreo es el muestreo aleatorio.
+
+***Muestreo aleatorio***: si $Y_1, Y_2,...,Y_n$ son variables aleatorias independientes con una función de densidad de probabilidad $f(y;\theta)$, entonces $\{Y_1,...,Y_n\}$ es una muestra aleatoria de $f(y;\theta)$. Cuando $\{Y_1,...,Y_n\}$ es una muestra aleatoria de la función de densidad $f(y;\theta)$ también se dice que $Y_i$ son variables aleatorias independientes e idénticamente distribuidas (iid) de $f(y;\theta)$.
+
+## Propiedades finitas de los estimadores
+
+### Estimadores y estimaciones
+
+Dada una muestra aleatoria $\{Y_1,Y_2,...,Y_n\}$ obtenida de una distribución poblacional que depende un único parámetro $\theta$, un **estimador** $\theta$ es una regla que asigna a cada posible resultado de la muestra un valor de $\theta$. La regla es especificada antes de que el muestreo se lleve a cabo; en particular, la regla es la misma sin considerar los datos obtenidos.
+
+Por ejemplo, sea $\{Y_1,Y_2,...,Y_n\}$ una muestra aleatoria de una población con media $\mu$. Un estimador natural de $\mu$ es el promedio de la muestra aleatoria:
+
+$$\bar{Y}=n^{-1}\sum_{i=1}^n Y_i$$
+
+$\bar{Y}$ es llamado promedio muestral, es un estimador. Más generalmente, un estimador $W$ de un parámetro $\theta$ puede ser expresado como una fórmula matemática abstracta:
+
+$$W=h(Y_1,Y_2,...,Y_n)$$ para una función conocida $h$ de las variables aleatorias $Y_1,Y_2,...,Y_n$. Cuando un conjunto particular de números, por ejemplo, $\{y_1,y_2,...,y_n\}$, se introduce en la función $h$, se obtiene la estimación de $\theta$, denotado por
+
+$$w=h(y_1,y_2,...,y_n)$$ $W$ también es una variable aleatoria y es también llamado estimador puntual y $w$ una estimación puntual. La distribución de un estimador se conoce como **distribución muestral**
+
+### Insesgamiento
+
+En principio, la distribución muestral de $W$ puede ser obtenida dada la distribución de probabilidad de $Y_i$ y la función $h$.
+
+***Definición***: un estimador, $W$ de $\theta$ es un estimador insesgado si
+
+$$\mathbb{E}(W)=\theta$$ para todos los posibles valores de $\theta$.
+
+***Sesgo de un estimador***: si $W$ es un estimador sesgado de $\theta$, su sesgo es definido por
+
+$$\text{Bias}(W)\equiv \mathbb{E}(W)-\theta$$
+
+### Varianza muestral de los estimadores
+
+Se necesitan criterios adicionales para evaluar estimadores. El insesgamiento solo asegura que la distribución muestral de un estimador tiene valor medio igual al parámetro que se supone que está estimando. También podría ser útil saber qué tan dispersa es la distribución del estimador. La varianza de un estimador es llamada varianza muestral porque está asociada con una distribución muestral. La varianza muestral no es una variable aleatoria, es una constante pero puede no ser conocida
+
+$$\text{Var}(\bar{Y})=\frac{\sigma^2}{n}$$ Dentro de los estimadores insesgados, se preferirá siempre el estimador con la varianza más pequeña. Esto permite eliminar ciertos estimadores del panorama.
+
+```{r include=TRUE}
+# Set seed for reproducibility
+set.seed(123)
+
+# Number of samples and sample size
+num_samples <- 20
+sample_size <- 10
+
+# Initialize vectors to store results
+sample_number <- 1:num_samples
+y1 <- numeric(num_samples)
+sample_mean <- numeric(num_samples)
+
+# Generate samples and compute y1 and means
+for (i in sample_number) {
+  sample <- rnorm(sample_size, mean = 2, sd = 1)
+  y1[i] <- sample[1]
+  sample_mean[i] <- mean(sample)
+}
+
+# Create data frame
+result <- data.frame(
+  Sample_Number = sample_number,
+  y1 = y1,
+  Sample_Mean = sample_mean
+)
+
+# Print the result
+print(result)
+
+```
+
+### Eficiencia
+
+***Eficiencia relativa***: si $W_1$ y $W_2$ son dos estimadores de $\theta$, $W_1$ es relativo-eficiente a $W_2$ cuando $\text{Var}(W_1)\leq \text{Var}(W_2)$ para todo $\theta$, con desigualdad estricta para al menos un valor de $\theta$.
+
+Una forma de comparar estimadores que no son necesariamente insesgados es calcular el *error cuadrático medio* (MSE) de los estimadores. Si $W$ es un estimador de $\theta$, entonces el MSE de $W$ es definido como
+
+$$\text{MSE}(W)=\mathbb{E}[(W-\theta)^2]$$ El MSE mide qué tan lejos, en promedio, está el estimador de $\theta$. Esto permite comparar dos estimadores cuando uno o ambos están sesgados.
+
+## Propiedades de muestras grandes (o asintóticas) de los estimadores
+
+Parece razonable que se requiere que cualquier procedimiento de estimación mejore a medida que el tamaño de la muestra se incrementa. Es posible deshacerse de algunos estimadores al estudiar propiedades asintóticas o de muestras grandes. Es difícil determinar qué es una muestra grande, pero las propiedades asintóticas funcionan bien con $n\geq20$.
+
+### Consistencia
+
+Sea $W_n$ un estimador de $\theta$ basado en $Y_1,Y_2,...,Y_N$ de tamaño $n$, $W_n$ es un estimador consistente de $\theta$ si para cada $\varepsilon>0$
+
+$$\text{P}(|W_n-\theta|>\varepsilon)\to 0\text{ a medida que }n\to\infty$$ Cuando $W_n$ es consistente, se dice también que $\theta$ es el límite de probabilidad de $W_n$, escrito como $\text{plim}(W_n)=0$.
+
+```{r include=TRUE}
+# Load necessary library
+library(ggplot2)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Function to perform bootstrapping and return the means of bootstrapped samples
+bootstrap_means <- function(data, num_bootstrap) {
+  bootstrap_means <- numeric(num_bootstrap)
+  for (i in 1:num_bootstrap) {
+    bootstrap_sample <- sample(data, length(data), replace = TRUE)
+    bootstrap_means[i] <- mean(bootstrap_sample)
+  }
+  return(bootstrap_means)
+}
+
+# True parameters
+mu <- 2
+sigma <- 1
+
+# Number of bootstrap samples
+num_bootstrap <- 1000
+
+# Sample sizes
+sample_sizes <- c(10, 50, 1000)
+
+# Initialize data frame to store results
+bootstrap_results <- data.frame()
+
+# Perform bootstrapping for different sample sizes
+for (n in sample_sizes) {
+  sample <- rnorm(n, mean = mu, sd = sigma)
+  bootstrap_means_sample <- bootstrap_means(sample, num_bootstrap)
+  temp_df <- data.frame(
+    Bootstrap_Mean = bootstrap_means_sample,
+    Sample_Size = as.factor(n)
+  )
+  bootstrap_results <- rbind(bootstrap_results, temp_df)
+}
+
+# Plot kernel density estimates in one figure
+ggplot(bootstrap_results, aes(x = Bootstrap_Mean, color = Sample_Size, fill = Sample_Size)) +
+  geom_density(alpha = 0.5) +
+  ggtitle("") +
+  xlab("") +
+  ylab("") +
+  geom_vline(xintercept = mu, linetype = "dashed", color = "red") +
+  scale_fill_manual(values = c("10" = "blue", "50" = "green", "1000" = "orange")) +
+  scale_color_manual(values = c("10" = "blue", "50" = "green", "1000" = "orange")) +
+  theme_minimal()
+
+```
+
+En la gráfica se puede apreciar cómo a medida que $n$ es más grande la distribución empieza a colapsar hacia el valor del parámetro que se está estimando.
+
+Si $W_n$ es un estimador insesgado de $\theta$ y $\text{Var}(W_n)\to 0$ a medida que $n\to\infty$, entonces $\text{plim}(W_n)=\theta$.
+
+***Ley de los grandes números***: sean $Y_1, Y_2,...,Y_n$ variables aleatorias iid con media $\mu$. Entonces,
+
+$$\text{plim}(\bar{Y}_n)=\mu$$
+
+La ley de los grandes números indica que si estamos interesados en estimar la media poblacional, podemos acercarnos a esta con una muestra lo suficientemente grande.
+
+***Propiedad PLIM 1***: sea $\theta$ un parámetro y defina un nuevo parámetro $\gamma=g(\theta)$, para alguna función continua $g(\theta)$. Suponga que $\text{plim}(W_n))=\theta$. Defina un estimador de $\gamma$ como $G_n=g(W_n)$. Entonces
+
+$$
+\text{plim}(G_n)=\gamma
+$$ Esto implica que
+
+$$\text{plim} g(W_n)=g(\text{plim}W_n)$$ para una función continua $g(\theta)$. Un ejemplo con la desviación estándar. Si la varianza es
+
+$$S^2_n=\frac{1}{n-1}\sum_{i=1}^n(Y_i-\bar{Y}_n)^2$$
+
+y es insesgado. Haciendo uso de la ley de los grandes números se puede demostrar que también es consistente. Sin embargo, el estimador de la desviación estándar $\sigma$ que sería $\sqrt{S^2_n}$ no es un estimador insesgado de $\sigma$ porque
+
+$$\mathbb{E}\left(\sqrt{S^2_n}\right)\neq\sqrt{\mathbb{E}(S^2_n)}$$ No obstante, sí es consistente:
+
+$$\text{plim}\sqrt{S^2_n}=\sqrt{\text{plim}S^2_n}=\sqrt{\sigma^2}=\sigma$$
+
+***Propiedad PLIM 2***: si $\text{plim}(T_n)=\alpha$ y $\text{plim}(U_n)=\beta$, entonces
+
+1.  $\text{plim}(T_n+U_n)=\alpha+\beta$
+2.  $\text{plim}(T_nU_n)=\alpha\beta$
+3.  $\text{plim}(T_n/U_n)=\alpha/\beta$, si $\beta\neq 0$
+
+### Normalidad asintótica
+
+La consistencia es una propiedad de los estimadores puntuales. Aunque indica que la distribución de un estimador colapsa alrededor del parámetro a medida que $n$ crece, no dice nada acerca de la distribución para un tamaño de muestra dado. Para poder construir intervalos de confianza y pruebas de hipótesis es necesario aproximarse a la distribución de los estimadores. La mayoría de los estimadores en econometría tienen distribuciones que se aproximan bien a una distribución normal para grandes muestras.
+
+***Definición***: sea $\{Z_n:n=1,2,...\}$ una secuencia de variables aleatorias, tal que para todo los números $z$,
+
+$$P(Z_n\leq z)\to\Phi(z) \text{ a medida que }n\to \infty$$ donde $\Phi(z)$ es la función de distribución acumulada normal estándar. Entonces, $Z_n$ sigue asintóticamente una distribución normal estándar.
+
+$$Z_n\stackrel{a}\sim Normal(0,1)$$
+
+En consecuencia, la probabilidades asociadas a $Z_n$ pueden ser aproximadas a través de probabilidades normales estándar.
+
+**Teorema del límite central**: el promedio de una muestra aleatoria de cualquier población (con varianza finita), cuando se estandariza, sigue asintóticamente una distribución normal estándar. Sea $\{Y_1,Y_2,...Y_n\}$ una muestra aleatoria con media $\mu$ y varianza $\sigma^2$. Entonces
+
+$$Z_n=\frac{\bar{Y}-\mu}{\sigma\sqrt{n}}=\frac{\sqrt{n}(\bar{Y}_n-\mu)}{\sigma}$$ sigue asintóticamente una distribución normal estándar. Multiplicar por $\sqrt{n}$ asegura que la varianza de $Z_n$ se mantenga constante.
+
+## Estimación de parámetros
+
+### Método de momentos
+
+El parámetro $\theta$ está relacionado a algún valor esperado in la distribución de $Y$, usualmente $\mathbb{E}(Y)$ o $\mathbb{E}(Y^2)$. Un ejemplo: suponga que se tiene un estimador del parámetro $\theta$ que de alguna forma está relacionado con $\mu$: $g(\mu)$. Como se sabe que un estimador insesgado y consistente de $\mu$ es $\bar{Y}$, entonces se puede remplazar $\mu$ por $\bar{y}$: $g(\bar{Y})$. Este estimador es consistente. Lo que se ha hecho es remplazar el momento poblacional $\mu$ por su contraparte muestral, $\bar{Y}$.
+
+### Máxima verosimilitud
+
+Sea $\{Y_1,Y_2,...,Y_n\}$ una muestra aleatoria de la distribución poblacional $f(y;\theta)$. Debido al supuesto de muestreo aleatorio, la distribución conjunta de $\{Y_1,Y_2,...,Y_n\}$ es simplemente el producto de las densidades: $f(y_1;\theta)f(y_2;\theta)\cdots f(y_n;\theta)$. La función de verosimilitud está dada por
+
+$$L(\theta;Y_1,Y_2,...,Y_n)=f(Y_1;\theta)f(Y_2;\theta)\cdots f(Y_n;\theta)$$
+
+la cual es una variable aleatoria porque depende del resultado de la muestra aleatoria $\{Y_1,Y_2,...,Y_n\}$. El estimador de máxima verosimilitud de $\theta$, sea $W$, es el valor de $\theta$ que maximiza la función de verosimilitud. El principio de máxima verosimilitud dice que de todos los posibles valores de $\theta$, el valor que haga la verosimilitud de los datos observados la más grande posible, debería ser escogido.
+
+Es más apropiado emplear la función de log-verosimilitud
+
+$$\mathscr{L}=\ln[L(\theta;Y_1,Y_2,...,Y_n)]=\sum_{i=1}^n\ln [f(Y_i;\theta)]=\sum_{i=1}^n \ell(\theta;X_i)$$ La estimación a través de máxima verosimilitud (MLE) es usualmente consistente y algunas veces insesgada. Tiene la varianza más pequeña entre todos los estimadores insesgados de $\theta$. Por eso es llamado *estimador insesgado de mínima varianza*.
+
+### Mínimos cuadrados
+
+En este estimador lo que se busca es encontrar un valor $m$ que minimice la suma de las desviaciones al cuadrado de la muestra. Por ejemplo,
+
+$$\sum_{i=1}^n (Y_i-m)^2$$
+
+si se encuentra el valor de $m$ en esta ecuación se llegará a $\bar{Y}$.
+
+Los métodos de estimación pueden dar lugar al mismo estimador. Los estimadores pueden ser similares pero no idénticos.
+
+## Estimación de intervalos e intervalos de confianza
+
+### Naturaleza de la estimación de intervalos
+
+Un estimador puntual obtenido de una muestra particular no provee suficiente información para probar teoría económicas y así informar discusiones políticas. Un estimador puntual puede ser la mejor suposición del valor poblacional pero, por su naturaleza, no provee información sobre qué tan probable es que la estimación esté cerca de ser el parámetro poblacional.
+
+Consideremos un intervalo de confianza del $95\%$ para la media:
+
+$$\bar{Y}\pm1.96/\sqrt{n}$$ El significado de un intervalo de confianza en este caso es que el $95\%$ de las veces, el intervalo contendrá al parámetro poblacional.
+
+```{r include=TRUE}
+# Load necessary package
+library(ggplot2)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Step 1: Generate a normal distribution
+mean_val <- 2
+sd_val <- 3
+n <- 1000
+data <- rnorm(n, mean = mean_val, sd = sd_val)
+
+# Step 2: Get 50 samples of 100 data
+sample_size <- 100
+num_samples <- 50
+samples <- replicate(num_samples, sample(data, sample_size))
+
+# Step 3: Build 95% confidence intervals for the mean of each sample
+conf_intervals <- apply(samples, 2, function(sample) {
+  sample_mean <- mean(sample)
+  sample_sd <- sd(sample)
+  error_margin <- qt(0.975, df = sample_size - 1) * (sample_sd / sqrt(sample_size))
+  lower_bound <- sample_mean - error_margin
+  upper_bound <- sample_mean + error_margin
+  return(c(lower_bound, sample_mean, upper_bound))
+})
+
+# Calculate the number of intervals that contain the parameter value 2
+contains_param <- sum(conf_intervals[1, ] <= mean_val & conf_intervals[3, ] >= mean_val)
+
+# Step 4: Draw the plot
+df <- data.frame(
+  Sample = 1:num_samples,
+  Lower = conf_intervals[1, ],
+  Mean = conf_intervals[2, ],
+  Upper = conf_intervals[3, ]
+)
+
+ggplot(df, aes(x = Sample)) +
+  geom_errorbar(aes(ymin = Lower, ymax = Upper), width = 0.2, color = "blue") +
+  geom_point(aes(y = Mean), color = "black") +
+  geom_hline(yintercept = mean_val, linetype = "dashed", color = "red") +
+  labs(title = "Intervalos de confianza al 95%",
+       subtitle = paste("Número de intervalos de confianza que contienen al parámetro poblacional:", contains_param),
+       x = "Sample",
+       y = "Value") +
+  theme_minimal()
+
+```
+
+En esta gráfica hemos tomado 50 muestras de una variable aleatoria $X \sim Normal(2,3)$. Las barras azules representan el intervalo, el punto negro representa la estimación puntual y la línea punteada roja es el valor poblacional. Como se puede observar, 47 de las 50 veces que se calcularon tanto el estimador puntual como el intervalo de confianza, este último contuvo el parámetro poblacional.
+
+```{r include=TRUE}
+# Load necessary package
+library(ggplot2)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Step 1: Generate a normal distribution
+mean_val <- 2
+sd_val <- 3
+n <- 1000
+data <- rnorm(n, mean = mean_val, sd = sd_val)
+
+# Step 2: Get 50 samples of 100 data
+sample_size <- 100
+num_samples <- 100
+samples <- replicate(num_samples, sample(data, sample_size))
+
+# Step 3: Build 95% confidence intervals for the mean of each sample
+conf_intervals <- apply(samples, 2, function(sample) {
+  sample_mean <- mean(sample)
+  sample_sd <- sd(sample)
+  error_margin <- qt(0.975, df = sample_size - 1) * (sample_sd / sqrt(sample_size))
+  lower_bound <- sample_mean - error_margin
+  upper_bound <- sample_mean + error_margin
+  return(c(lower_bound, sample_mean, upper_bound))
+})
+
+# Calculate the number of intervals that contain the parameter value 2
+contains_param <- sum(conf_intervals[1, ] <= mean_val & conf_intervals[3, ] >= mean_val)
+
+# Step 4: Draw the plot
+df <- data.frame(
+  Sample = 1:num_samples,
+  Lower = conf_intervals[1, ],
+  Mean = conf_intervals[2, ],
+  Upper = conf_intervals[3, ]
+)
+
+ggplot(df, aes(x = Sample)) +
+  geom_errorbar(aes(ymin = Lower, ymax = Upper), width = 0.2, color = "blue") +
+  geom_point(aes(y = Mean), color = "black") +
+  geom_hline(yintercept = mean_val, linetype = "dashed", color = "red") +
+  labs(title = "Intervalos de confianza al 95%",
+       subtitle = paste("Número de intervalos de confianza que contienen al parámetro poblacional:", contains_param),
+       x = "Sample",
+       y = "Value") +
+  theme_minimal()
+
+```
+
+Veámoslo ahora con 100 muestras.
+
+### Intervalos de confianza para la media de una población distribuida normalmente
+
+Generalizando el intervalo anteriormente calculado se puede plantear que $\sigma\neq 1$
+
+$$\bar{y}\pm 1.96 \sigma/\sqrt{n}$$ Si la varianza no se conoce, se puede llevar a cabo una estimación de $\sigma$
+
+$$s=\left(\frac{1}{n-1}\sum_{i=1}^n (y_i-\bar{y})^2\right)^{1/2}$$ En este caso, esto no preserva el nivel de confianza del $95\%$ porque $s$ depende de una muestra particular. En lugar de utilizar la distribución normal estándar, se puede emplear la distribución $t$. La distribución $t$ surge de que
+
+$$\frac{\bar{Y}-\mu}{S/\sqrt{n}}\sim t_{n-1}$$ donde $\bar{Y}$ es el promedio muestral y $S$ es la desviación estándar de la muestra aleatoria $\{Y_1,...,Y_n\}$.
+
+Para construir un intervalo de confianza del $95\%$, $c$ denota el percentil 97.5 en la distribución $t_{n-1}$. En otras palabras, $c$ es el valor tal que $95\%$ del área de $t_{n-1}$ está entre $-c$ y $c$: $P(-c<t_{n-1}<c)=.95$.
+
+```{r include=TRUE}
+# Load necessary package
+library(ggplot2)
+
+# Degrees of freedom for the t-distribution
+df <- 30
+
+# Critical value for 0.025 in each tail
+c <- qt(0.975, df)
+
+# Generate data for the t-distribution
+x <- seq(-4, 4, length = 1000)
+y <- dt(x, df)
+
+# Create a data frame for plotting
+df_plot <- data.frame(x, y)
+
+# Plot the t-distribution with shaded areas and custom x-axis labels
+ggplot(df_plot, aes(x = x, y = y)) +
+  geom_line() +
+  geom_ribbon(data = subset(df_plot, x <= -c), aes(ymax = y), ymin = 0, fill = "blue", alpha = 0.5) +
+  geom_ribbon(data = subset(df_plot, x >= c), aes(ymax = y), ymin = 0, fill = "blue", alpha = 0.5) +
+  geom_vline(xintercept = -c, linetype = "dashed", color = "red") +
+  geom_vline(xintercept = c, linetype = "dashed", color = "red") +
+  scale_x_continuous(breaks = c(-c, 0, c), labels = c("-c", "0", "c")) +
+  labs(title = "Distribución t",
+       x = "Valor t",
+       y = "Densidad") +
+  theme_minimal()
+```
+
+Una ecuación más general de los intervalos de confianza para la media sería:
+
+$$\bar{y}\pm c_{\alpha/2}\cdot\text{se}(\bar{y})$$ donde $c$ es el valor crítico de la distribución $t$ con un nivel de confianza del $(100-\alpha)\%$, con $0<\alpha<1$ y $se(\bar{y})$ es el error estándar de $\bar{y}$.
+
+### Un "Rule of thumb" para un intervalo del 95%
+
+Para un $\alpha=0.05$, $c_{\alpha/2}\to 1.96$ a medida que $n\to\infty$, entonces una regla sencilla para el cálculo de intervalos de confianza sería
+
+$$\bar{y}\pm 2\cdot se(\bar{y})$$
+
+### Intervalos de confianza asintóticos para poblaciones no normales
+
+En ocasiones, las distribuciones pueden no ser normales. No obstante, con una muestra lo suficientemente grande se puede dar una buena aproximación para la distribución del promedio muestral $\bar{Y}$. Para un $n$ grande, un intervalo de confianza del $95\%$ aproximado sería $$\bar{y}\pm 1.96 \cdot se(\bar{y})$$
+
+Más datos implican intervalos más pequeños.
+
+## Pruebas de hipótesis
+
+A veces lo importante es tener una respuesta de sí o no. Para poder responder a este tipo de preguntas se utiliza un método conocido como prueba de hipótesis. \### Fundamentos de pruebas de hipótesis
+
+Para entender el procedimiento de prueba de hipótesis es necesario definir algunos elementos.
+
+1.  Hipótesis nula: $H_0$. Así como se presume inocencia en un juicio, la hipótesis nula se presume cierta hasta que se demuestre lo contrario.
+2.  Hipótesis alterna: $H_1$. La hipótesis que se quiere probar contra la hipótesis nula.
+
+En el contexto de una prueba de hipótesis se pueden cometer dos tipos de error: error Tipo I (rechazar la hipótesis nula cuando es cierta) y error Tipo II (no rechazar la hipótesis nula cuando realmente es falsa). El *nivel de significancia* es usualmente conocido como la probabilidad de un error Tipo I, denotado como $\alpha$:
+
+$$\alpha=P(\text{Rechazar }H_0|H_0)$$ Los valores más usuales para $\alpha$ son $0.1$, $0.05$ y $0.01$. Una vez se escoge el nivel de significancia, sería bueno minimizar la probabilidad de un error Tipo II. O, alternativamente, maximizar el poder de la pruebacontra las alternativas relevantes. Esto es
+
+$$\pi(\theta)=P(\text{Rechazar }H_0|\theta)1-P(\text{Tipo II}|\theta)$$
+
+donde $\theta$ denota el valor real del parámetro. Naturalmente, nos gustaría el poder igual a la unidad cuando la hipótesis nula es falsa.
+
+### Pruebas de hipótesis sobre la media en poblaciones normales
+
+Para llevara a cabo una prueba de hipótesis, debe escogerse un estadístico de prueba y un valor crítico. Un estadístico de prueba $T$ es alguna función de una variable aleatoria. Cuando el cálculo del estadístico se lleva a cabo, se obtiene $t$. Dado este estadístico, se pueden definir las reglas de rechazo que detemrinan cuando $H_0$ es rechazada en favor de $H_1$. En general, todas las reglas de rechazo se basan en comparar el valor de un estadístico $t$ con un valor crítico $c$.
+
+Para determinar el valor crítico, se selecciona un valor $\alpha$. Dado este $\alpha$ el valor crítico es asociado con la distribución de $T$, asumiendo que $H_0$ es verdadero.
+
+Probar hipótesis accerca de la media $\mu$ de una población $Normal(\mu,\sigma^2)$ es sencillo. La hipótesis nula está dada por
+
+$$H_0:\mu=\mu_0$$ mientras que las alternativas pueden ser
+
+$$H_1:\mu>\mu_0$$ $$H_1:\mu<\mu_0$$ $$H_1:\mu\neq\mu_0$$
+
+Las dos primeras son alternativas de una cola, mientras que la segunda es alternativa de dos colas.
+
+```{r include=TRUE}
+# Load necessary libraries
+library(ggplot2)
+library(gridExtra)
+
+# Function to create a plot for one-sided or two-sided t-test
+create_plot <- function(alternative) {
+  df <- 30 # degrees of freedom
+  alpha <- 0.05
+  x <- seq(-4, 4, length = 1000)
+  y <- dt(x, df)
+  
+  plot <- ggplot(data.frame(x, y), aes(x, y)) +
+    geom_line() +
+    theme_minimal() +
+    theme(axis.title.x = element_blank(), 
+          axis.text.x = element_blank(), 
+          axis.ticks.x = element_blank(),
+          axis.title.y = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks.y = element_blank())
+  
+  if (alternative == "two.sided") {
+    crit_val <- qt(1 - alpha / 2, df)
+    plot <- plot +
+      geom_area(data = subset(data.frame(x, y), x <= -crit_val), aes(x = x, y = y), fill = "red", alpha = 0.5) +
+      geom_area(data = subset(data.frame(x, y), x >= crit_val), aes(x = x, y = y), fill = "red", alpha = 0.5)
+  } else if (alternative == "less") {
+    crit_val <- qt(alpha, df)
+    plot <- plot +
+      geom_area(data = subset(data.frame(x, y), x <= crit_val), aes(x = x, y = y), fill = "red", alpha = 0.5)
+  } else if (alternative == "greater") {
+    crit_val <- qt(1 - alpha, df)
+    plot <- plot +
+      geom_area(data = subset(data.frame(x, y), x >= crit_val), aes(x = x, y = y), fill = "red", alpha = 0.5)
+  }
+  
+  return(plot)
+}
+
+# Create individual plots
+plot_two_sided <- create_plot("two.sided")
+plot_less <- create_plot("less")
+plot_greater <- create_plot("greater")
+
+# Arrange the plots in a single figure vertically
+grid.arrange(plot_less, plot_two_sided, plot_greater, ncol = 1)
+```
+
+En este caso el estadístico de prueba sería
+
+$$t=\sqrt{n}(\bar{y}-\mu_0)/s=\frac{\bar{y}-\mu_0}{\text{se}(\bar{y})}$$
+
+el cual sigue una distribución $t{n-1}$. Para el primer ejemplo, la regla de rechazo sería $$t>c$$
+
+o para el segundo ejemplo
+
+$$t<-c$$
+
+Si tuviéramos una prueba a dos colas sería
+
+$$|t|>c$$
+
+### Test asintóticos para poblaciones no normales
+
+Si la muestra es lo suficientemente grande para invocar el teorema del límite central, la mecánica de la prueba de hipótesis para las medias poblacionales son las mismas se tenga o no una distribución poblacional normal. La justificación teórica es que, bajo la hipótesis nula,
+
+$$T=\sqrt{n}(\bar{Y}-\mu)/S\stackrel{a}\sim Normal(0,1)$$
+
+### P-valores
+
+¿Cuál es el nivel de significancia más alto al cual se puede llevar a cabo una prueba y aún así no tener evidencia suficiente para rechazar la hipótesis nula? Este valor es conocido como *p-valor* de una prueba. Cuando se lleva a cabo una prueba de hipótestis se calcula un estadístico de prueba, si se ubica este estadístico de prueba cuando la alternativa es de una cola dentro de la distribución, el área bajo la curva después de este valor (cuando la alternativa es "\>") es conocida como p-valor.
+
+Cuando se tiene una alternativa de dos colas es similar, solo que se deben tomar en cuenta ambos lados de la distribución:
+
+$$P(|T_{n-1}|>|t|)=2P(T_{n-1}>|t|)$$

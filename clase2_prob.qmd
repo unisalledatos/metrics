@@ -1,0 +1,470 @@
+---
+title: "Probabilidad e inferencia"
+author: "Carlos Ortiz"
+format: pdf
+editor: visual
+execute: 
+  echo: false
+  include: false
+---
+
+## Variables aleatorias y sus distribuciones de probabilidad
+
+1. Un experimento es un procedimiento que puede ser, al menos en teoría, infinitamente repetido y tiene un conjunto bien definido de resultados.
+
+- Lanzar una moneda.
+- Lanzar un dado.
+
+2. El espacio muestral es el conjunto de posibilidades del experimento.
+
+3. Un evento es un subconjunto de un espacio muestral (no todos).
+
+4. Una variable aleatoria es una función que relaciona el espacio muestral con los números reales. Usualmente se emplean subíndices para indicar conjuntos grandes de variables aleatorias: $X_1, X_2, ..., X_n$. Los resultados serían $x_1, x_2,...,x_n$. 
+
+
+### Variables aleatorias discretas
+
+Una variable aleatoria discreta toma sola valores finitos o infinitamente contables.
+
+***Bernoulli***: la variable aleatoria de Bernoulli es el ejemplo más simple de variable aleatoria discreta. Esta solo toma valores de 1 y 0. Lo único que requerimos para describir una variable aleatoria de Bernoulli es la probabilidad que tome el valor de 1. Podemos llamar a este valor $\theta$, entonces
+
+$$P(X=1)=\theta$$
+$$P(X=0)=1-\theta$$
+Cualquier variable discreta es completamente descrita listan sus posibles valores y la probabilidad asociada que toma en cada valor. Si $\mathbf{X}$ tiene $k$ posibles valores $\{x_1, x_2, ..., x_n\}$, entonces las probabilidades $p_1,p_2,...,p_k$ están definidos por
+$$p_j=P(X=x_j), j=1,2,...,k$$
+donde cada $p_j$ está entre 0 y 1
+
+$$p_1+p_2+...+p_k=1$$
+***Función de densidad de probabilidad***: la función de densidad de probabilidad (pdf) de $X$ resume la información concerniente a los posibles resultados de $X$ y las probabilidades correspondientes:
+
+$$f(x_j)=p_j,\hspace{0.5cm}j=1,2,...,k$$
+con $f(x)=0$ para cada $x$ diferente de $x_j$ para algún $j$.
+
+### Variables aleatorias continuas
+
+Una variable aleatoria continua toma cualquier valor real con probabilidad cero. Se puede definir una función de densidad de probabilidad para variables aleatorias continuas como con las variables discretas. Sin embargo, no tiene sentido discutir la probabilidad de una variable continua sobre un valor particular, se emplea la pdf de las variables continuas solo para calcular eventos que involucran un rango de valores. Por ejemplo, si $a$ y $b$ son constantes donde $a<b$, la probabilidad de que $X$ se encuentre entre los números $a$ y $b$, $P(a\leq X \leq b)$, es el área bajo la pdf entre los dos puntos.
+
+Cuando se calculan probabilidad poara variables aleatorias continuas, es más fácil trabajar con la función de distribución acumulad cdf. Si $X$ es cualquier variable aleatoria, entonces su cdf está definida para cualquier número real por 
+
+$$F(x)\equiv P(X\leq x)$$
+
+```{r include=TRUE}
+# Establecer los parámetros
+df <- 3 # grados de libertad
+a <- 1
+b <- 4
+
+# Calcular la probabilidad acumulada entre a y b
+probabilidad <- pchisq(b, df) - pchisq(a, df)
+
+
+# Graficar la distribución \u03C7^2 con sombreado entre a y b
+x <- seq(0, 10, length.out = 1000)
+y <- dchisq(x, df)
+
+# Crear la gráfica
+plot(x, y, type = "l", lwd = 2, col = "blue", main = expression(paste(chi^2, " Distribución con ", df, " grados de libertad")),
+     ylab = "Densidad", xlab = "x")
+
+# Sombrear el área entre a y b
+polygon(c(a, seq(a, b, length.out = 100), b), c(0, dchisq(seq(a, b, length.out = 100), df), 0), col = "skyblue", border = NA)
+
+# Añadir líneas verticales en a y b
+abline(v = c(a, b), col = "red", lty = 2)
+
+# Añadir una leyenda
+legend("topright", legend = c("Área sombreada: P(a < X < b)"), fill = "skyblue")
+
+```
+
+***Propiedades***:
+
+1. Para cualquier número $c$, $P(X>C)=1-F(c)$
+2. Para cualesquiera números $a<b$, $P(a<X\leq b)=F(b)-F(a)$
+
+Para variables aleatorias continuas
+
+1. $P(X\geq c)=P(X>c)$
+2. $P(a<X<b)=P(a\leq X\leq b)=P(a\leq X < b)=P(a<X\leq b)$
+
+
+
+## Distribuciones conjuntas, distribuciones condicionales e independencia
+
+Puede ser de interés la ocurrencia de eventos que involucran dos o más variables aleatorias. Esto se puede estudiar y comprender a partir de probabilidades conjuntas o probabilidades condicionales.
+
+### Distribuciones conjuntas e independencia
+
+Sean $X$ y $Y$ variables aleatorias discretas. Entonces, $(X,Y)$ tienen una distribución conjunta, la cual está descrita por la función de densidad de probabilidad conjunta de $(X,Y)$
+
+$$f_{X,Y}(x,y)=P(X=x,Y=y)$$
+Se dice que las variables aleatorias son independientes si y solo si
+
+$$f_{X,Y}(x,y)=f_X(x)f_Y(y)$$
+
+para cada $x$ y cada $y$, donde $f_X$ es la pdf de $X$ y $f_Y$ es la pdf de $Y$. Estas últimas son también llamadas funciones marginales de densidad de probabilidad. Esta definición es válida tanto para discretas como para continuas.
+
+### Distribuciones condicionales
+
+En econometría, usualmente estamos interesados en cómo una variable aleatoria, sea $Y$ por ejemplo, está relacionada con una o más variables. Esta información está contenida en la distribución condicional de $Y$ dado $X$. Está esta resumida en la función de densidad de probabilidad condicional
+
+$$f_{Y|X}(y|x)=\frac{f_{X|Y}(x,y)}{f_X(x)}$$
+
+Para todos los valores tal que $f_X(x)>0$. La interpretación es más sencilla cuando
+
+$$f_{Y|X}(y|x)=P(Y=y|X=x)$$
+
+Si $X$ y $Y$ son independientes, el valor de $X$ no dice nada acerca de $Y$. Esto es
+
+$$f_{Y|X}(y|x)=f_Y(y),\hspace{0.5cm}f_{X|Y}(x|y)=f_X(x)$$
+## Características de las distribuciones de probabilidad
+
+Para muchos propósitos solo algunas características interesan: medidas de tendencia central, medidas de dispersión y medidas de asociación.
+
+### Valor esperado
+
+El valor $\mathbb{E}(X)$ es el promedio ponderado de todos los posibles valores de $X$, siendo esta última una variable aleatoria. Las ponderaciones están dadas por la función de densidad de probabilidad.
+
+$$\mathbb{E}(X)=x_1f(x_1)+x_2f(x_2)+...+x_nf(x_n)=\sum_{i=1}^nx_jf(x_j)$$
+
+Si $X$ es una variable aleatoria continua, entonces $\mathbb{E}(X)$ está definido por 
+
+$$\mathbb{E}(X)=\int_{-\infty}^\infty xf(x)dx$$
+$$\mathbb{E}[g(X)]=\sum_{i=1}^ng(x_j)f_X(x_j),\hspace{0.5cm}\mathbb{E}[g(X)]=\int_{-\infty}^\infty g(x)f_X(x)dx$$
+
+Sean $X$ y $Y$ dos variables aleatorias, entonces
+
+$$\mathbb{E}[g(X, Y)]=\sum_{h=1}^k\sum_{j=1}^m g(x_h, y_j)f_{X,Y}(x_h, y_j)$$
+
+#### Propiedades del valor esperado
+
+***Propiedad 1***
+$$\mathbb{E}(c)=c$$
+
+***Propiedad 2***
+$$\mathbb{E}(aX+b)=a\mathbb{E}(X)+b$$
+
+***Propiedad 3***: si $\{a_1,a_2,...,a_n\}$ son constantes y $\{X_1, X_2, ..., X_n\}$ son variables aleatorias, entonces
+
+$$\mathbb{E}(a_1X_1+a_2X_2+...+a_nX_n)=a_1\mathbb{E}(X_1)+a_2\mathbb{E}(X_2)+...+a_n\mathbb{E}(X_n)$$
+En términos de sumatorias
+
+$$\mathbb{E}\left(\sum_{i=1}^na_iX_i\right)=\sum_{i=1}^na_i\mathbb{E}(X_i)$$
+
+Si $a_i=1$, entonces
+
+$$\mathbb{E}\left(\sum_{i=1}^nX_i\right)=\sum_{i=1}^n\mathbb{E}(X_i)$$
+
+### La varianza
+
+Es el valor esperado del cuadrado de las distancias de la variable aleatoria $X$ a su valor esperado. Denotada muchas veces como $\sigma^2$.
+
+$$\text{Var}(X)\equiv \mathbb{E}[(X-\mathbb{E}(X))^2]$$
+```{r}
+# Establecer los parámetros
+set.seed(123) # Para reproducibilidad
+mean <- 0
+variances <- c(1, 16, 36) # Diferentes varianzas
+
+# Generar datos
+data1 <- rnorm(1000, mean, sqrt(variances[1]))
+data2 <- rnorm(1000, mean, sqrt(variances[2]))
+data3 <- rnorm(1000, mean, sqrt(variances[3]))
+
+# Crear la gráfica con 3 histogramas en una sola fila
+par(mfrow = c(1, 3)) # Dividir la figura en una matriz de 1 fila por 3 columnas
+
+# Histograma de la primera distribución
+hist(data1, main = "Media = 0, Varianza = 1", xlab = "Valor", ylab = "Frecuencia", col = "lightblue")
+
+# Histograma de la segunda distribución
+hist(data2, main = "Media = 0, Varianza = 16", xlab = "Valor", ylab = "Frecuencia", col = "lightgreen")
+
+# Histograma de la tercera distribución
+hist(data3, main = "Media = 0, Varianza = 36", xlab = "Valor", ylab = "Frecuencia", col = "lightcoral")
+
+# Restablecer el parámetro de gráficos
+par(mfrow = c(1, 1))
+
+```
+***Propiedad 1***: $\text{Var}(X)=0$ si y solo si, existe una constante $c$ tal que $P(X=c)=1$, en cuyo caso $E(X)=c$. Básicamente, la varianza de una constante es 0.
+
+***Propiedad 2***: para cualesquiera constantes $a$ y $b$, $\text{Var}(aX+b)=a^2\text{Var}(X)$.
+
+
+### Desviación estándar
+
+Es simplemente la raíz positiva de la varianza. Denotada como $\sigma$.
+
+$$\text{sd}(X)=+\sqrt{\text{Var}(X)}$$
+
+***Propiedad 1***: para cualquier constante $c$, $\text{sd}(c)=0$.
+***Propiedad 2***: para cualesquiera constantes $a$ y $b$ $\text{sd}(aX + b)=|a|\text{sd}(X)$
+
+### Estandarizar una variable aleatoria
+
+
+
+$$Z\equiv \frac{X-\mu}{\sigma}$$
+
+donde $\mathbb{E}(Z)=0$ y $\text{Var}(Z)=1$.
+
+### Asimetría y curtosis
+
+Se puede emplear el tercer momento de la variable estandarizada para determinar si una distribución es simétrica alrededor de la media:
+
+$$\mathbb{E}(Z^3)=\mathbb{E}[(X-\mathbb{E}(X))^3]/\sigma^3$$
+```{r}
+set.seed(123)
+sym_dist <- rnorm(1000)         
+pos_skew <- rlnorm(1000)        
+neg_skew <- -rlnorm(1000)     
+
+
+par(mfrow = c(1, 3))
+
+
+hist(sym_dist, main = "Simétrica", xlab = "Valores", ylab = "Frecuencia", col = "lightblue", border = "black")
+
+
+hist(pos_skew, main = "Asimetría Positiva", xlab = "Valores", ylab = "Frecuencia", col = "lightgreen", border = "black")
+
+
+hist(neg_skew, main = "Asimetría Negativa", xlab = "Valores", ylab = "Frecuencia", col = "lightcoral", border = "black")
+
+
+par(mfrow = c(1, 1))
+```
+
+También se puede emplear el cuarto momento para determinar la curtosis:
+
+$$\mathbb{E}(Z^4)=\mathbb{E}[(X-\mathbb{E}(X))^4]/\sigma^4$$
+```{r}
+
+set.seed(123)
+mesokurtic <- rnorm(1000)         
+leptokurtic <- c(rnorm(800), rt(200, df = 2))   
+platikurtic <- runif(1000)         
+
+par(mfrow = c(1, 3))
+
+max_y <- max(
+  hist(mesokurtic, plot = FALSE)$counts,
+  hist(leptokurtic, plot = FALSE)$counts,
+  hist(platikurtic, plot = FALSE)$counts
+)
+
+
+hist(mesokurtic, main = "Distribución Mesocúrtica", xlab = "Valores", ylab = "Frecuencia", col = "lightblue", border = "black", ylim = c(0, max_y))
+
+
+hist(leptokurtic, main = "Distribución Leptocúrtica", xlab = "Valores", ylab = "Frecuencia", col = "lightgreen", border = "black", ylim = c(0, max_y))
+
+
+hist(platikurtic, main = "Distribución Platicúrtica", xlab = "Valores", ylab = "Frecuencia", col = "lightcoral", border = "black", ylim = c(0, max_y))
+
+
+
+```
+## Características de distribuciones conjuntas y condicionales
+
+Mientras que la función de densidad de probabilidad conjunta de dos variables aleatorias describe la relación entre ellas, es útil tener algunas medidas de cómo, en promedio, dos variables aleatorias varian una con otra.
+
+### Covarianza
+
+La covarianza mide la dependencia lineal entre dos variables aleatorias. Una varianza positiva indica que dos variables aleatorias se mueven en la misma dirección, mientras que una covarianza negativa indica que las dos variables aleatorias se mueven en direcciones opuestas.
+
+$$\text{Cov}(X,Y)=\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))]$$
+$$\text{Cov}(X,Y)=\mathbb{E}(XY)-\mathbb{E}(X)\mathbb{E}(Y)$$
+***Propiedad 1***: si $X$ y $Y$ son independientes, entonces $\text{Cov}(X, Y)=0$.
+
+***Propiedad 2***: para cualesquiera constantes $a_1, b_1, a_2$ y $b_2$
+
+$$\text{Cov}(a_1X+b_1,a_2Y+b_2)=a_1a_2\text{Cov}(X,Y)$$
+***Propiedad 3***: 
+$$|\text{Cov}(X,Y)|\leq \text{sd}(X)\text{sd}(Y)$$
+### Coeficiente de correlación 
+
+
+
+$$\text{Corr}(X,Y)=\frac{\text{Cov}(X,Y)}{\text{sd}(X)\text{sd}(Y)}$$
+
+***Propiedad 1***: $-1\leq\text{Corr}(X,Y)\leq 1$
+
+***Propiedad 2***: Para cualesquiera constantes $a_1, b_1, a_2$ y $b_2$, con $a_1a_2>0$
+
+$$\text{Corr}(a_1X+b_1,a_2Y+b_2)=\text{Corr}(X,Y)$$
+Si $a_1a_2<0$, entonces
+$$\text{Corr}(a_1X+b_1,a_2Y+b_2)=-\text{Corr}(X,Y)$$
+
+### Varianza de la suma de variables aleatorias 
+
+***Propiedad (varianza) 3***:
+$$\text{Var}(aX+bY)=a^2\text{Var}(X)+b^2\text{Var}(Y)+2ab\text{Cov}(X,Y)$$
+Si $\text{Cov}(X,Y)=0$
+$$\text{Var}(X+Y)=\text{Var}(X)+\text{Var}(Y)$$
+$$\text{Var}(X+Y)=\text{Var}(X)-\text{Var}(Y)$$
+***Propiedad (varianza) 4***: si $\{X_1,...,X_n\}$ son variables aleatorias no correlacionadas y $a_i=1,...,n$ son constantes, entonces
+
+$$\text{Var}(a_1+...+a_nX_n)=a_1^2\text{Var}(X_1)+...+a_n^2\text{Var}(X_n)$$
+o lo que es lo mismo
+
+$$\text{Var}\left(\sum_{i=1}^na_iX_i\right)=\sum_{i=1}^na_i^2\text{Var}(X_i)$$
+si $a_i=1$
+$$\text{Var}\left(\sum_{i=1}^nX_i\right)=\sum_{i=1}^n\text{Var}(X_i)$$
+
+### Esperanza condicional
+
+La covarianza y la correlació miden la relación lineal entre dos variables aleatorias y las trata simétricamente. A menudo se quiere explicar una variable, sea $Y$ in términos de otra variables, sea $X$. Si $X$ está relacionada en una forma no lineal con $X$, nos gustaría saberlo. 
+
+Digamos que $Y$ sea la variable explicada y $X$ la variable explicativa. La idea es la siguiente, supongan que sabemos que $X$ ha tomado un valor particular de $X$, $x$. Entonces se puede calcular el valor esperado de $Y$, dado que se conoce este valor de $X$. Esto se denota como $\mathbb{E}(\mathbf{Y}|\mathbb{X}=x)$.
+
+### Propiedades de la esperanza condicional
+
+***Propiedad 1***: $\mathbb{E}[c(X)|X]=c(X)$ para cualquier función $c(X)$. Esto significa que las funciones de $X$ se comportan como constantes cuando se calculan los valores esperados condicionales en $X$. Por ejemplo, $\mathbb{E}(X^2|X)=X^2$.
+
+***Propiedad 2***: Para funciones $a(X)$ y $b(X)$
+
+$$\mathbb{E}[a(X)Y+b(X)|X]=a(X)\mathbb{E}(Y|X)+b(X)$$
+
+***Propiedad 3***: si $X$ y $Y$ son independientes, entonces $\mathbb{E}(Y|X)=E(Y)$. Por ejemplo, si $U$ y $X$ son independientes y $\mathbb{E}(U)=0$, entonces $\mathbb{E}(U|X)=0$.
+
+***Propiedad 4***: $\mathbb{E}[\mathbb{E}(Y|X)]=\mathbb{E}(Y)$.  
+
+***Propiedad 5***: $\mathbb{E}(Y|X)=\mathbb{E}[\mathbb{E}(Y|X,Z)|X]$
+
+***Propiedad 6***: si $\mathbb{E}(Y|X)=\mathbb{E}(Y)$, entonces $\text{Cov}(X,Y)=0$. De hecho, cualquier función de $X$ no está correlacionada con $Y$.
+
+***Propiedad 7***: si $\mathbb{E}(Y^2)<\infty$ y $\mathbb{E}[g(X)^2]<\infty$ para alguna función $g$, entonces $\mathbb{E}\{[Y-\mu(X)]^2|X\}\leq \mathbb{E}\{[Y-g(X)]^2|X\}$ y $E\{[Y-\mu(X)]^2\}\leq \mathbb{E}\{[Y-g(X)]^2\}$. Esta propiedad es útil en un contexto de pronóstico. La primera desigualdad dice que si nosotros medimos la imprecisión de la predicción como el valor esperado del error cuadrático de la predicción, condicional en $X$, entonces la media condicional es mejor que cualquier otra función de $X$ para predecir $Y$. La media condicional también minimiza el valor esperado del error cuadrático de la predicción incondicional.
+
+### Varianza condicional
+
+Dadas dos variables aleatorias $X$ y $Y$, la varianza de $Y$ condicional en $X=x$, es simplemente la vairanza asociada con la distribución condicional de $Y$, dada $X=x$: $\mathbb{E}\{[Y-\mathbb{Y|x}]^2|x\}$. Esto puede escribirse también como
+
+$$\text{Var}(Y|X=x)=\mathbb{E}(Y^2|x)-[\mathbb{E}(Y|x)]^2$$
+***Propiedad 1***: si $X$ y $Y$ son independientes, entonces $\text{Var}(Y|X)=\text{Var}(Y)$.
+
+## Distribución normal y distribuciones relacionadas
+
+### Distribución normal
+
+La función de densidad de probabilidad puede escribirse como
+
+$$f(x)=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$
+Con $\mathbb{E}(X)=\mu$ y $\text{Var}(X)=\sigma^2$. Puede escribirse entonces que
+
+$$X\sim Normal(\mu,\sigma^2)$$
+```{r}
+set.seed(123)
+data <- rnorm(100000)
+
+
+par(mfrow = c(1, 2))
+
+
+hist(data, probability = TRUE, main = "Distribución Normal", xlab = "Valores", ylab = "Densidad", col = "lightblue", border = "black")
+lines(density(data), col = "blue", lwd = 2)  
+
+
+plot(ecdf(data), main = "Distribución Normal Acumulada", xlab = "Valores", ylab = "Probabilidad Acumulada", col = "lightblue", verticals = TRUE, do.points = FALSE)
+
+
+```
+### Distribución normal estándar
+
+Si una variable aleatoria $Z$ tiene una distribución $Normal(0,1)$, entonces se dice que sigue una distribución normal estándar. La pdf de una variable aleatoria normal estándar es denotada como $\phi(z)$ con $\mu=0$ y $\sigma^2=1$ dada por
+
+$$\phi(z)=\frac{1}{\sqrt{2\pi}}e^{\frac{-z^2}{2}},\hspace{0.5cm}-\infty<z<\infty$$
+La función de la distribución normal estándar acumulada se denota como $\Phi(z)$ y es obtenida como el área bajo $\phi$, a la izquierda de $z$.
+### Propiedades de la distribución normal
+
+***Propiedad 1***: si $X\sim Normal(\mu, \sigma^2)$, entonces $(X-\mu)/\sigma\sim Normal(0,1)$.
+
+***Propiedad 2***: si $X\sim Normal(\mu, \sigma^2)$, entonces $aX+b\sim Normal(a\mu+b, a^2\sigma^2)$.
+
+***Propiedad 3***: si $X$ y $Y$ están distribuidas conjuntamente, entonces son independientes si y solo si $\text{Cov}(X,Y)=0$.
+
+***Propiedad 4***: cualquier combinación lineal de variables aleatorias independientes e idénticamente distribuidas tienen una distribución normal. 
+
+La simetría es igual a 0 (no es asimétrica). Y la curtosis es igual a 3. Si la curtosis fuera mayor a 3, entonces sería platicúrtica, y si fuera menor a 3 sería leptocúrtica.
+### Distribución $\chi^2$
+
+La distribución $\chi^2$ es obtenida directamente de variables aleatorias normales $Z_i, i=1,2,...,n$. Defina una nueva variable aleatoria como la suma de los cuadrados de $Z_i$:
+
+$$X=\sum_{i=1}^nZ_i^2$$
+
+Entonces, $X\sim \chi^2_n$ con $n$ grados de libertad.
+```{r}
+# Configurar el área de gráficos para 3 gráficos en una fila
+par(mfrow = c(1, 3))
+
+# Generar datos para la distribución chi-cuadrado con diferentes grados de libertad
+for (df in c(5, 15, 25)) {
+  data <- rchisq(1000, df)
+  hist(data, probability = TRUE, main = paste("Distribución Chi-cuadrado (df =", df, ")", sep = ""), xlab = "Valores", ylab = "Densidad", col = "lightblue", border = "black")
+  lines(density(data), col = "blue", lwd = 2)  # Añadir la curva de densidad
+}
+
+# Restaurar la configuración original de gráficos
+par(mfrow = c(1, 1))
+
+```
+
+$$\mathbb{E}(X)=n$$
+
+$$\text{Var}(X)=2n$$
+### Distribución $t$
+
+La distribución $t$ es el caballo de batalla de la estadística clásica y el análisis de regresión múltiple. Se obtiene de una distribución normal estándar y una variable aleatoria $\chi^2$. Sea $Z$ una variable aleatoria con una distribución normal estándar y $X$ una variable con distribución $\chi^2$ y $n$ grados de libertad. Asuma que $Z$ y $X$ son independientes. Entonces la variable aleatoria
+
+$$T=\frac{Z}{\sqrt{X/n}}$$
+tiene una distribución $t$ con $n$ grados de libertad. $T\sim t_n$.
+
+$$\mathbb{E}(T)=0,\hspace{0.3cm}n>1$$
+
+$$\text{Var}(T)=n/(n-2),\hspace{0.3cm}n>2$$
+La varianza no existe para $n\geq 2$. La distribución tiene a la normal estándar a medida que $n$ tiende a infinito.
+
+```{r}
+
+# Configurar el área de gráficos para 3 gráficos en una fila
+par(mfrow = c(1, 3))
+
+# Generar datos para la distribución t de Student con diferentes grados de libertad
+for (df in c(2, 10, 30)) {
+  data <- rt(1000, df)
+  hist(data, probability = TRUE, main = paste("Distribución t de Student (df =", df, ")", sep = ""), xlab = "Valores", ylab = "Densidad", col = "lightblue", border = "black")
+  lines(density(data), col = "blue", lwd = 2)  # Añadir la curva de densidad
+}
+
+# Restaurar la configuración original de gráficos
+par(mfrow = c(1, 1))
+
+```
+
+### Distribución $F$
+
+Para definir la variable aleatoria $F$, sean $X_1\sim \chi^2_{k_1}$ y $X_2\sim \chi^2_{k_2}$ y asuma que son independientes. Entonces, la variable aleatoria
+
+$$F=\frac{(X_1/k_1)}{(X_2/k_2)}$$
+
+sigue una distribución $F$ con $(k_1,k_2)$ grados de libertad. Esto se denota como $F\sim F_{k_1,k_2}$.
+
+
+```{r}
+# Configurar el área de gráficos para 3 gráficos en una fila
+par(mfrow = c(2, 2))
+
+# Generar datos para la distribución F con diferentes grados de libertad
+for (df1 in c(2, 6)) {
+  for (df2 in c(8, 20)) {
+    data <- rf(1000, df1, df2)
+    hist(data, probability = TRUE, main = paste("Distribución F (df1 =", df1, ", df2 =", df2, ")", sep = ""), xlab = "Valores", ylab = "Densidad", col = "lightblue", border = "black")
+    lines(density(data), col = "blue", lwd = 2)  # Añadir la curva de densidad
+  }
+}
+
+
+```
+
+
