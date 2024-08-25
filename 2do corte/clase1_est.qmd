@@ -1,0 +1,33 @@
+---
+title: "Inferencia"
+format: html
+editor: visual
+---
+
+## Estimación por MCO
+
+### Estimación empleando matrices
+
+### Estimación con R
+
+## Supuestos
+
+1. Linealidad en los parámetros
+
+2. No hay multicolinealidad perfecta
+
+3. Media condicional cero
+
+4. Homocedasticidad y no autocorrelación
+
+5. Muestreo aleatorio
+
+## Propiedades
+
+### Varianza de los estimadores de MCO
+
+### Insesgamiento
+
+### Consistencia
+
+### Teorema de Frisch-Waugh-Lowell

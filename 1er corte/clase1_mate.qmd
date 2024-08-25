@@ -11,6 +11,7 @@ execute:
 ## Operador de sumatorias y estadística descriptiva
 
 $$\sum_{i=1}^n x_i\equiv x_1+x_2+...+x_n$$
+
 ```{r}
 x1 = 2
 x2 = 4
@@ -21,9 +22,10 @@ sum_x = x1 + x2 + x3
 print(sum_x)
 ```
 
-1. Propiedad 1
+1.  Propiedad 1
 
 $$\sum_{i=1}^n c=nc$$
+
 ```{r}
 n = 5
 c = 3
@@ -35,9 +37,10 @@ sum_c2 = n * c
 print(sum_c == sum_c2)
 ```
 
-2. Propiedad 2
+2.  Propiedad 2
 
 $$\sum_{i=1}^n c x_i = c\sum_{i=1}^n x_i$$
+
 ```{r}
 c = 2
 x1 = 3
@@ -54,7 +57,8 @@ sum_cx2 = c * (x1 + x2 + x3)
 print(sum_cx == sum_cx2)
 
 ```
-3. Propiedad 3
+
+3.  Propiedad 3
 
 $$\sum_{i=1}^n (ax_i + by_i)=a\sum_{i=1}^n x_i + b\sum_{i=1}^n y_i$$
 
@@ -84,10 +88,10 @@ print(sum_axby == sum_axby2)
 
 **A tener en cuenta**
 
-$$\sum_{i=1}^n(x_i/y_i)\neq \left(\sum_{i=1}^n x_i\right)\bigg/\left(\sum_{i=1}^n y_i\right)$$
-***Promedio simple***
+$$\sum_{i=1}^n(x_i/y_i)\neq \left(\sum_{i=1}^n x_i\right)\bigg/\left(\sum_{i=1}^n y_i\right)$$ ***Promedio simple***
 
 $$\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$$
+
 ```{r}
 x1 = 3
 x2 = 1
@@ -100,20 +104,16 @@ avg_x = (1 / 3) * sum_x
 print(avg_x)
 ```
 
-***Desviación simple***
-$$d_i\equiv x_i-\bar{x}$$
-$$\sum_{i=1}^n d_i =\sum_{i=1}^n (x_i-\bar{x})=\sum_{i=1}^n x_i- \sum_{i=1}^n \bar{x}=\sum_{i=1}^n x_i - n\bar{x}=n\bar{x}-n\bar{x}=0$$
+***Desviación simple*** $$d_i\equiv x_i-\bar{x}$$ $$\sum_{i=1}^n d_i =\sum_{i=1}^n (x_i-\bar{x})=\sum_{i=1}^n x_i- \sum_{i=1}^n \bar{x}=\sum_{i=1}^n x_i - n\bar{x}=n\bar{x}-n\bar{x}=0$$
 
 $$\sum_{i=1}^n (x_i-\bar{x})=0$$
 
-$$\sum_{i=1}^n (x_i-\bar{x})^2=\sum_{i=1}^n x_i^2 -n(\bar{x})^2$$
-$$\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y}) = \sum_{i=1}^n x_i(y_i-\bar{y})=\sum_{i=1}^n(x_i-\bar{x})y_i $$
+$$\sum_{i=1}^n (x_i-\bar{x})^2=\sum_{i=1}^n x_i^2 -n(\bar{x})^2$$ $$\sum_{i=1}^n (x_i-\bar{x})(y_i-\bar{y}) = \sum_{i=1}^n x_i(y_i-\bar{y})=\sum_{i=1}^n(x_i-\bar{x})y_i $$
 
 ## Propiedades de las funciones lineales
 
-$$y=\beta_0+\beta_1x$$
-$$\beta_0: \text{ intercepto }$$
-$$\beta_1: \text{ pendiente }$$
+$$y=\beta_0+\beta_1x$$ $$\beta_0: \text{ intercepto }$$ $$\beta_1: \text{ pendiente }$$
+
 ```{r include=TRUE}
 
 beta_0 = 4
@@ -129,8 +129,7 @@ plot(x, y, type='l')
 
 El cambio en $y$ es siempre $\beta_1$ por el cambio en $x$.
 
-$$\Delta y = \beta_1 \Delta x$$
-El efecto marginal de $x$ en $y$ es constante e igual a $\beta_1$. Las funciones lineales también pueden tener dos o más variables:
+$$\Delta y = \beta_1 \Delta x$$ El efecto marginal de $x$ en $y$ es constante e igual a $\beta_1$. Las funciones lineales también pueden tener dos o más variables:
 
 $$y=\beta_0+\beta_1x_1+\beta_2x_2$$
 
@@ -159,15 +158,14 @@ $$\Delta y =\beta_1 \Delta x_1 +\beta_2 \Delta x_2$$
 
 Si $x_2$ no cambia, esto es, $\Delta x_2 = 0$, entonces
 
-$$\Delta y =\beta_1\Delta x_1$$
-Dado que esto mide cómo cambia $y$ con $x_1$ manteniendo constante a $x_2$, en este caso $\beta_1$ es usualmente llamado efecto parcial de $x_1$ en $y$. 
-
+$$\Delta y =\beta_1\Delta x_1$$ Dado que esto mide cómo cambia $y$ con $x_1$ manteniendo constante a $x_2$, en este caso $\beta_1$ es usualmente llamado efecto parcial de $x_1$ en $y$.
 
 ## Proporciones y porcentajes
 
 ***Cambio relativo***
 
 $$\frac{x_1-x_0}{x_0}=\frac{\Delta x}{x_0}$$
+
 ```{r}
 x1 = 10
 x0 = 4
@@ -177,27 +175,28 @@ rel_delta = deltaX / x0
 ans = paste("Cambio relativo: ", rel_delta, ".", sep="")
 print(ans)
 ```
+
 ***Cambio porcentual***
 
 $$\% \Delta x= 100 \cdot \frac{\Delta x}{x_0}$$
+
 ```{r}
 
 ans = paste("Cambio porcentual: ", 100 * rel_delta, "%", sep="")
 print(ans)
 ```
+
 ***Cambio en puntos porcentuales***
 
 Suponga que inicialmente se tiene que el 24% de personas van a la universidad en 2023 y en 2024 esta cifra cambia a 30%. ¿Cuánto fue el incremento? Las personas tienden a decir: "Hubo un incremento del 6% en las personas que van a la universidad." Pero esto es incorrecto. Hubo un incremento de seis **puntos porcentuales** sería lo apropiado en este caso. Si se quisiera expresar en cambio porcentual, usaríamos la fórmula vista anteriormente:
 
-$$\% \Delta x=100\cdot\frac{30-24}{24}=25$$
-En este caso diríamos que el número de personas que van a la universidad se incrementó en seis puntos porcentuales o en un 25%.
+$$\% \Delta x=100\cdot\frac{30-24}{24}=25$$ En este caso diríamos que el número de personas que van a la universidad se incrementó en seis puntos porcentuales o en un 25%.
 
 ## Algunas funciones especiales y sus propiedades
 
 ### Funciones cuadráticas
 
-$$y=\beta_0+\beta_1 x+\beta_2x^2$$
-Podemos ver diferentes formas dependiendo del valor de $\beta_2$
+$$y=\beta_0+\beta_1 x+\beta_2x^2$$ Podemos ver diferentes formas dependiendo del valor de $\beta_2$
 
 ```{r include=TRUE}
 
@@ -222,7 +221,9 @@ Se puede también obtener la pendiente de la función cuadrática:
 $$pendiente = \frac{\Delta y}{\Delta x}\approx \beta_1+2\beta_2 x$$
 
 ### Logaritmo natural
+
 $$y=\ln x$$
+
 ```{r include=TRUE}
 x = 0:100
 y = log(x)
@@ -232,58 +233,44 @@ plot(x, y, type='l')
 
 Está definida únicamente para $x>0$. Se tienen algunas propiedades importantes:
 
-1. $\ln x < 0$ para $0<x<1$
-2. $\ln(1)=0$
-3. $\ln(x)>0$ para $x>1$
+1.  $\ln x < 0$ para $0<x<1$
+2.  $\ln(1)=0$
+3.  $\ln(x)>0$ para $x>1$
 
-Adicionalmente
-1. $\ln(x \cdot y)=\ln(x) + \ln (y)$
-2. $\ln(x / y) = \ln(x) - \ln(y)$
-3. $\ln(x^c)=c\ln(x)$, $x>0$ y $c\in\mathbb{R}$
+Adicionalmente 1. $\ln(x \cdot y)=\ln(x) + \ln (y)$ 2. $\ln(x / y) = \ln(x) - \ln(y)$ 3. $\ln(x^c)=c\ln(x)$, $x>0$ y $c\in\mathbb{R}$
 
 Por último, se pueden hacer algunas aproximaciones
 
-1. $\ln(1+x)\approx x$, si $x\approx 0$.
-2. $\ln(x_1)-\ln(x_0)\approx (x_1-x_0)/x_0=\Delta/x_0$ para cambios pequeños en $x$. Con esto se puede plantear:
-$$100\cdot\Delta\ln(x)\approx \%\Delta x$$
-3. Si se tiene 
-$$\ln(y)=\beta_0+\beta_1\ln(x)$$
-$\beta_1$ es la elasticidad de $y$ con respecto a $x$ (asumiendo que $x,y>0$). Por ejemplo, con la ecuación 
-$$\ln(q)=4.7-1.25\ln(p)$$
-donde $q$ es la cantidad demandada y $p$ es el precio, se puede interpretar que un incremento del $1\%$ en el precio provoca una reducción del $1.25\%$ en la cantidad demandada. 
-4. Si se tiene
-$$\ln(y)=\beta_0+\beta_1 x$$
-se puede plantear que 
-$$\%\Delta y\approx (100\cdot \beta_1)\Delta x$$
-El valor $\%\Delta y /\Delta x$ se conoce como semi-elasticidad. Por ejemplo, 
+1.  $\ln(1+x)\approx x$, si $x\approx 0$.
+2.  $\ln(x_1)-\ln(x_0)\approx (x_1-x_0)/x_0=\Delta/x_0$ para cambios pequeños en $x$. Con esto se puede plantear: $$100\cdot\Delta\ln(x)\approx \%\Delta x$$
+3.  Si se tiene $$\ln(y)=\beta_0+\beta_1\ln(x)$$ $\beta_1$ es la elasticidad de $y$ con respecto a $x$ (asumiendo que $x,y>0$). Por ejemplo, con la ecuación $$\ln(q)=4.7-1.25\ln(p)$$ donde $q$ es la cantidad demandada y $p$ es el precio, se puede interpretar que un incremento del $1\%$ en el precio provoca una reducción del $1.25\%$ en la cantidad demandada.
+4.  Si se tiene $$\ln(y)=\beta_0+\beta_1 x$$ se puede plantear que $$\%\Delta y\approx (100\cdot \beta_1)\Delta x$$ El valor $\%\Delta y /\Delta x$ se conoce como semi-elasticidad. Por ejemplo,
 
 $$\ln(wage)=2.78+0.94 educ$$
 
 puede interpretarse como que un año adicional de educación provoca un incremento de $9.4\%$ en el salario.
 
-5. Si se tiene
+5.  Si se tiene
 
-$$y=\beta_0+\beta_1\ln(x)$$
-se puede plantear que 
+$$y=\beta_0+\beta_1\ln(x)$$ se puede plantear que
 
-$$\Delta y \approx (\beta_1/100)(\% \Delta x)$$
-Por ejemplo, si se tiene
+$$\Delta y \approx (\beta_1/100)(\% \Delta x)$$ Por ejemplo, si se tiene
 
-$$hours = 333 + 45.1 \ln(wage)$$
-se puede interpretar como que un $1\%$ adicional de salario incrementa las horas en 0.45 horas trabajadas. Si el salario se incrementa un $10\%$, entonces
+$$hours = 333 + 45.1 \ln(wage)$$ se puede interpretar como que un $1\%$ adicional de salario incrementa las horas en 0.45 horas trabajadas. Si el salario se incrementa un $10\%$, entonces
 
-$$\Delta hours=.451(10)=4.51$$
-es decir, 4.5 horas de trabajo de incremento.
+$$\Delta hours=.451(10)=4.51$$ es decir, 4.5 horas de trabajo de incremento.
 
 ### Función exponencial
 
 $$y=e^x$$
+
 ```{r include=TRUE}
 x = -2:10
 y = exp(x)
 
 plot(x, y, type='l', main='Función exponencial')
 ```
+
 Con esta función se deben tener un cuenta algunos elementos relevantes: $e^0=1$ y $e^1\approx 2.7183$. La función exponencial es la inversa de la función de logaritmo natural. En particular
 
 $$\ln(y)=\beta_0+\beta_1 x \equiv y=e^{\beta_0+\beta_1 x}$$
@@ -292,89 +279,69 @@ $$\ln(y)=\beta_0+\beta_1 x \equiv y=e^{\beta_0+\beta_1 x}$$
 
 Suponga una función $f(x)$, entonces
 
-$$\Delta y \approx \frac{df}{dx}\cdot \Delta x$$
-$$\frac{\Delta y}{\Delta x}\approx \frac{df}{dx}$$
+$$\Delta y \approx \frac{df}{dx}\cdot \Delta x$$ $$\frac{\Delta y}{\Delta x}\approx \frac{df}{dx}$$
 
 ### Propiedades de la derivación
 
-
-
 #### 1. Linealidad (Reglas de la Suma y Diferencia)
 
-- **Regla de la Suma**: La derivada de la suma de dos funciones es la suma de sus derivadas.
-  $$
-  \frac{d}{dx}[f(x) + g(x)] = f'(x) + g'(x)
-  $$
+-   **Regla de la Suma**: La derivada de la suma de dos funciones es la suma de sus derivadas. $$
+    \frac{d}{dx}[f(x) + g(x)] = f'(x) + g'(x)
+    $$
 
-- **Regla de la Diferencia**: La derivada de la diferencia de dos funciones es la diferencia de sus derivadas.
-  $$
-  \frac{d}{dx}[f(x) - g(x)] = f'(x) - g'(x)
-  $$
+-   **Regla de la Diferencia**: La derivada de la diferencia de dos funciones es la diferencia de sus derivadas. $$
+    \frac{d}{dx}[f(x) - g(x)] = f'(x) - g'(x)
+    $$
 
 #### 2. Regla del Multiplicador Constante
 
-La derivada de una constante multiplicada por una función es la constante multiplicada por la derivada de la función.
-$$
+La derivada de una constante multiplicada por una función es la constante multiplicada por la derivada de la función. $$
 \frac{d}{dx}[c \cdot f(x)] = c \cdot f'(x)
-$$
-donde $c$ es una constante.
+$$ donde $c$ es una constante.
 
 #### 3. Regla de la Potencia
 
-La derivada de una función potencia $f(x) = x^n$ está dada por:
-$$
+La derivada de una función potencia $f(x) = x^n$ está dada por: $$
 \frac{d}{dx}[x^n] = n \cdot x^{n-1}
-$$
-donde $n$ es una constante.
+$$ donde $n$ es una constante.
 
 #### 4. Regla del Producto
 
-La derivada del producto de dos funciones está dada por:
-$$
+La derivada del producto de dos funciones está dada por: $$
 \frac{d}{dx}[f(x) \cdot g(x)] = f'(x) \cdot g(x) + f(x) \cdot g'(x)
 $$
 
 #### 5. Regla del Cociente
 
-La derivada del cociente de dos funciones está dada por:
-$$
+La derivada del cociente de dos funciones está dada por: $$
 \frac{d}{dx}\left[\frac{f(x)}{g(x)}\right] = \frac{f'(x) \cdot g(x) - f(x) \cdot g'(x)}{[g(x)]^2}
-$$
-siempre que $g(x) \neq 0$.
+$$ siempre que $g(x) \neq 0$.
 
 #### 6. Regla de la Cadena
 
-La derivada de una función compuesta está dada por:
-$$
+La derivada de una función compuesta está dada por: $$
 \frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)
 $$
 
 #### 7. Derivada de una Constante
 
-La derivada de una función constante es cero.
-$$
+La derivada de una función constante es cero. $$
 \frac{d}{dx}[c] = 0
-$$
-donde $c$ es una constante.
+$$ donde $c$ es una constante.
 
 #### 8. Derivadas de Funciones Comunes
 
-- **Función Exponencial**:
-  $$
-  \frac{d}{dx}[e^x] = e^x
-  $$
-  $$
-  \frac{d}{dx}[a^x] = a^x \ln(a)
-  $$
-  donde $a$ es una constante.
+-   **Función Exponencial**: $$
+    \frac{d}{dx}[e^x] = e^x
+    $$ $$
+    \frac{d}{dx}[a^x] = a^x \ln(a)
+    $$ donde $a$ es una constante.
 
-- **Función Logarítmica**:
-  $$
-  \frac{d}{dx}[\ln(x)] = \frac{1}{x}
-  $$
-  $$
-  \frac{d}{dx}[\log_a(x)] = \frac{1}{x \ln(a)}
-  $$
+-   **Función Logarítmica**: $$
+    \frac{d}{dx}[\ln(x)] = \frac{1}{x}
+    $$ $$
+    \frac{d}{dx}[\log_a(x)] = \frac{1}{x \ln(a)}
+    $$
 
 ### Derivadas parciales
 
@@ -384,7 +351,6 @@ $$y=f(x_1, x_2)$$
 
 En este caso hay dos derivadas parciales, una con respecto a $x_1$ y otra con respecto a $x_2$. Suponga
 
-$$y=\beta_0+\beta_1 x+\beta_2 x_2$$
-las derivadas serían entonces 
+$$y=\beta_0+\beta_1 x+\beta_2 x_2$$ las derivadas serían entonces
 
 $$\frac{\partial y}{\partial x_1}=\beta_1,\hspace{0.5cm}\frac{\partial y}{\partial x_2}=\beta_2$$

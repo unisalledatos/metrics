@@ -10,7 +10,7 @@ execute:
 
 ## Definiciones básicas
 
-***Definición 1***: Una matriz es un arreglo rectangular de números. Más precisamente, una matriz $m\times n$ tiene $m$ filas y $n$ columnas. El entero positivo $m$ es llamado la dimensión de filas y  $n$ es llamado la dimensión de columnas. 
+***Definición 1***: Una matriz es un arreglo rectangular de números. Más precisamente, una matriz $m\times n$ tiene $m$ filas y $n$ columnas. El entero positivo $m$ es llamado la dimensión de filas y $n$ es llamado la dimensión de columnas.
 
 $$\mathbf{A}=[a_{ij}]=\begin{bmatrix}
 a_{11} & a_{12} & a_{13} & \cdots & a_{1n} \\
@@ -19,7 +19,7 @@ a_{21} & a_{22} & a_{23} & \cdots & a_{2n} \\
 a_{m1} & a_{m2} & a_{m3} & \cdots & a_{mn} \\
 \end{bmatrix}$$
 
-donde $a_{ij}$ representa el elemento in la i-ésima fila y la j-ésima columna. 
+donde $a_{ij}$ representa el elemento in la i-ésima fila y la j-ésima columna.
 
 ```{r }
 matrix_data <- matrix(1:16, nrow = 4, ncol = 4)
@@ -36,17 +36,18 @@ matriz_cuadrada <- matrix(1:9, nrow = 3, ncol = 3, byrow = TRUE)
 print(matriz_cuadrada)
 ```
 
-***Definición 3***: 
+***Definición 3***:
 
-1. Una matriz $1\times m$ es llamada vector fila de dimensión $m$ y puede ser escrita como
-$$\mathbf{x}\equiv(x_1,x_2,...,x_m)$$
+1.  Una matriz $1\times m$ es llamada vector fila de dimensión $m$ y puede ser escrita como $$\mathbf{x}\equiv(x_1,x_2,...,x_m)$$
+
 ```{r}
 
 vector_fila <- c(10, 11, 12)
 
 print(vector_fila)
 ```
-2. Una matriz $n\times 1$ es llamado un vector columna y puede escribirse como
+
+2.  Una matriz $n\times 1$ es llamado un vector columna y puede escribirse como
 
 $$\mathbf{y}\equiv\begin{bmatrix}
 y_1\\
@@ -81,7 +82,7 @@ print(matriz_diagonal)
 
 ***Definición 5***:
 
-1. La matriz identidad $n\times n$, denotada como $\mathbf{I}$, o a veces $\mathbf{I}_n$ para hacer énfasis en su dimensión, es la matriz diagonal con el número 1 en cada posición de la diagonal y cero de cualquier otra forma:
+1.  La matriz identidad $n\times n$, denotada como $\mathbf{I}$, o a veces $\mathbf{I}_n$ para hacer énfasis en su dimensión, es la matriz diagonal con el número 1 en cada posición de la diagonal y cero de cualquier otra forma:
 
 $$\mathbf{A}=\begin{bmatrix}
 1 & 0 & 0 & \cdots & 0 \\
@@ -95,7 +96,8 @@ matriz_identidad <- diag(4)
 
 print(matriz_identidad)
 ```
-2. La matriz $m\times n$ de ceros, denotada como $\mathbf{0}$ es la matriz nula. No es necesario que sea una matriz cuadrada.
+
+2.  La matriz $m\times n$ de ceros, denotada como $\mathbf{0}$ es la matriz nula. No es necesario que sea una matriz cuadrada.
 
 ```{r}
 matriz_ceros <- matrix(0, nrow = 3, ncol = 4)
@@ -135,7 +137,7 @@ print(suma_matrices)
 
 Dado un número real $\gamma$, llamado escalar, la multiplicación escalar $\gamma\mathbf{A}\equiv[\gamma a_{ij}]$
 
-$$\mathbf{A}=[a_{ij}]=\begin{bmatrix}
+$$\gamma\mathbf{A}=[\gamma a_{ij}]=\begin{bmatrix}
 \gamma a_{11} & \gamma a_{12} & \gamma a_{13} & \cdots & \gamma a_{1n} \\
 \gamma a_{21} & \gamma a_{22} & \gamma a_{23} & \cdots & \gamma a_{2n} \\
 \vdots & \vdots & \vdots & \ddots & \vdots \\
@@ -154,11 +156,13 @@ print("Multiplicación por Escalar (2):")
 print(multiplicacion_escalar)
 
 ```
+
 ### Multiplicación de matrices
 
 Para multiplicar una matriz $\mathbf{A}$ con la matriz $\mathbf{B}$ para formar el producto $\mathbf{AB}$, la dimensión columna de $\mathbf{A}$ debe ser igual a la dimensión fila de la matriz $\mathbf{B}$. Sea $\mathbf{A}$ una matriz $m\times n$ y $\mathbf{B}$ una matriz $n\times p$. La multiplicación de matrices está definido por
 
 $$\mathbf{AB}=\left[\sum_{k=1}^n a_{ik}b_{kj}\right]$$
+
 ```{r}
 matriz1 <- matrix(1:9, nrow = 3, ncol = 3)
 matriz2 <- matrix(9:1, nrow = 3, ncol = 3)
@@ -173,10 +177,11 @@ print("Multiplicación de Matrices:")
 print(multiplicacion_matrices)
 
 ```
+
 Sean $\mathbf{A}$, $\mathbf{B}$ y $\mathbf{C}$ matrices con dimensiones apropiadas para cada operación y $\alpha$ y $\beta$ dos números reales, las operaciones con matrices siguen estas propiedades.
 
-***Propiedades de las operaciones matriciales***:
-1. $(\alpha +\beta)\mathbf{A}=\alpha\mathbf{A}+\beta\mathbf{A}$
+***Propiedades de las operaciones matriciales***: 1. $(\alpha +\beta)\mathbf{A}=\alpha\mathbf{A}+\beta\mathbf{A}$
+
 ```{r}
 # Crear una matriz A de 3x3
 A <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3)
@@ -196,7 +201,9 @@ print("Derecha: alpha * A + beta * A")
 print(right_side)
 
 ```
-2. $\alpha(\mathbf{A}+\mathbf{B})=\alpha\mathbf{A}+\alpha\mathbf{B}$
+
+2.  $\alpha(\mathbf{A}+\mathbf{B})=\alpha\mathbf{A}+\alpha\mathbf{B}$
+
 ```{r}
 # Crear una matriz B de 3x3
 B <- matrix(c(9, 8, 7, 6, 5, 4, 3, 2, 1), nrow = 3, ncol = 3)
@@ -212,7 +219,9 @@ print("Derecha: alpha * A + alpha * B")
 print(right_side)
 
 ```
-3. $(\alpha\beta)\mathbf{A}=\alpha(\beta\mathbf{A})$
+
+3.  $(\alpha\beta)\mathbf{A}=\alpha(\beta\mathbf{A})$
+
 ```{r}
 # Calcular (alpha * beta) * A y alpha * (beta * A)
 left_side <- (alpha * beta) * A
@@ -225,7 +234,9 @@ print("Derecha: alpha * (beta * A)")
 print(right_side)
 
 ```
-4. $\alpha(\mathbf{AB})=\alpha(\mathbf{A})\mathbf{B}$
+
+4.  $\alpha(\mathbf{AB})=\alpha(\mathbf{A})\mathbf{B}$
+
 ```{r}
 # Crear una matriz A de 3x2 y una matriz B de 2x3
 A <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, ncol = 2)
@@ -242,7 +253,9 @@ print("Derecha: (alpha * A) %*% B")
 print(right_side)
 
 ```
-5. $\mathbf{A}+\mathbf{B}=\mathbf{B}+\mathbf{A}$
+
+5.  $\mathbf{A}+\mathbf{B}=\mathbf{B}+\mathbf{A}$
+
 ```{r}
 # Crear una matriz A y una matriz B de 3x3
 A <- matrix(c(1, 2, 3, 4, 5, 6, 7, 8, 9), nrow = 3, ncol = 3)
@@ -259,7 +272,9 @@ print("Derecha: B + A")
 print(right_side)
 
 ```
-6. $(\mathbf{A}+\mathbf{B})+\mathbf{C}=\mathbf{A}+(\mathbf{B}+\mathbf{C})$
+
+6.  $(\mathbf{A}+\mathbf{B})+\mathbf{C}=\mathbf{A}+(\mathbf{B}+\mathbf{C})$
+
 ```{r}
 # Crear una matriz C de 3x3
 C <- matrix(c(1, 3, 5, 7, 9, 11, 13, 15, 17), nrow = 3, ncol = 3)
@@ -275,7 +290,9 @@ print("Derecha: A + (B + C)")
 print(right_side)
 
 ```
-7. $(\mathbf{AB})\mathbf{C}=\mathbf{A}(\mathbf{BC})$
+
+7.  $(\mathbf{AB})\mathbf{C}=\mathbf{A}(\mathbf{BC})$
+
 ```{r}
 # Crear una matriz A de 2x2, B de 2x2 y C de 2x2
 A <- matrix(c(1, 2, 3, 4), nrow = 2, ncol = 2)
@@ -293,7 +310,9 @@ print("Derecha: A(BC)")
 print(right_side)
 
 ```
-8. $\mathbf{A}(\mathbf{B}+\mathbf{C})=\mathbf{AB}+\mathbf{AC}$
+
+8.  $\mathbf{A}(\mathbf{B}+\mathbf{C})=\mathbf{AB}+\mathbf{AC}$
+
 ```{r}
 # Calcular A %*% (B + C) y A %*% B + A %*% C
 left_side <- A %*% (B + C)
@@ -306,7 +325,9 @@ print("Derecha: A %*% B + A %*% C")
 print(right_side)
 
 ```
-9. $(\mathbf{A}+\mathbf{B})\mathbf{C}=\mathbf{AC}+\mathbf{BC}$
+
+9.  $(\mathbf{A}+\mathbf{B})\mathbf{C}=\mathbf{AC}+\mathbf{BC}$
+
 ```{r}
 # Calcular (A + B) %*% C y A %*% C + B %*% C
 left_side <- (A + B) %*% C
@@ -319,7 +340,9 @@ print("Derecha: A %*% C + B %*% C")
 print(right_side)
 
 ```
+
 10. $\mathbf{IA}=\mathbf{AI}=\mathbf{A}$
+
 ```{r}
 # Crear una matriz identidad I de tamaño 3x3
 I <- diag(3)
@@ -336,7 +359,9 @@ print("AI:")
 print(AI)
 
 ```
+
 11. $\mathbf{A}+\mathbf{0}=\mathbf{0}+\mathbf{A}=\mathbf{A}$
+
 ```{r}
 # Crear una matriz cero de 3x3
 zero_matrix <- matrix(0, nrow = 3, ncol = 3)
@@ -352,7 +377,9 @@ print("0 + A:")
 print(zero_plus_A)
 
 ```
+
 12. $\mathbf{A}-\mathbf{A}=\mathbf{0}$
+
 ```{r}
 # Calcular A - A
 A_minus_A <- A - A
@@ -362,7 +389,9 @@ print("A - A:")
 print(A_minus_A)
 
 ```
+
 13. $\mathbf{A0}=\mathbf{0A}=\mathbf{0}$
+
 ```{r}
 # Calcular A %*% 0 y 0 %*% A
 A_zero <- A %*% zero_matrix
@@ -375,7 +404,9 @@ print("0 %*% A:")
 print(zero_A)
 
 ```
+
 14. $\mathbf{AB}\neq \mathbf{BA}$
+
 ```{r}
 # Crear una matriz A de 2x2 y una matriz B de 2x2
 A <- matrix(c(1, 2, 3, 4), nrow = 2, ncol = 2)
@@ -411,9 +442,10 @@ print(matriz_original)
 print("Matriz Transpuesta (3x2):")
 print(matriz_transpuesta)
 ```
+
 ***Propiedades de las traspuestas***:
 
-1. $(\mathbf{A}')'=\mathbf{A}$
+1.  $(\mathbf{A}')'=\mathbf{A}$
 
 ```{r}
 # Crear una matriz A de 3x3
@@ -429,7 +461,8 @@ print("Transpuesta de la Transpuesta de A:")
 print(A_double_transpose)
 
 ```
-2. $(\alpha\mathbf{A})'=\alpha\mathbf{A}'$
+
+2.  $(\alpha\mathbf{A})'=\alpha\mathbf{A}'$
 
 ```{r}
 # Escalar alfa
@@ -446,7 +479,8 @@ print("alpha * Transpuesta de A:")
 print(alpha_transpose_A)
 
 ```
-3. $(\mathbf{A}+\mathbf{B})'=\mathbf{A}'+\mathbf{B}'$
+
+3.  $(\mathbf{A}+\mathbf{B})'=\mathbf{A}'+\mathbf{B}'$
 
 ```{r}
 # Crear una matriz B de 3x3
@@ -463,7 +497,8 @@ print("Transpuesta de A + Transpuesta de B:")
 print(transpose_A_plus_transpose_B)
 
 ```
-4. $(\mathbf{AB})'=\mathbf{B}'\mathbf{A}'$
+
+4.  $(\mathbf{AB})'=\mathbf{B}'\mathbf{A}'$
 
 ```{r}
 # Crear una matriz A de 3x2 y una matriz B de 2x3
@@ -481,7 +516,8 @@ print("Transpuesta de B * Transpuesta de A:")
 print(transpose_BA)
 
 ```
-5. $\mathbf{x}'\mathbf{x}=\sum_{i=1}^n x_i^2$
+
+5.  $\mathbf{x}'\mathbf{x}=\sum_{i=1}^n x_i^2$
 
 ```{r}
 # Crear un vector x
@@ -498,7 +534,8 @@ print("Suma de los cuadrados de los elementos de x:")
 print(sum_x_squared)
 
 ```
-6. Si $\mathbf{A}$ es una matriz $n\times k$ con filas dadas por los vectores $1\times k$ $a_1,a_2,...,a_n$, entonces se puede escribir como
+
+6.  Si $\mathbf{A}$ es una matriz $n\times k$ con filas dadas por los vectores $1\times k$ $a_1,a_2,...,a_n$, entonces se puede escribir como
 
 ```{r}
 # Crear una matriz A de 3x3
@@ -526,9 +563,7 @@ $$\mathbf{A}=\begin{bmatrix}
 \mathbf{a}_2\\
 \vdots\\
 \mathbf{a}_n
-\end{bmatrix}$$
-Entonces $\mathbf{A}'=(\mathbf{a}_1'\mathbf{a}_2'...\mathbf{a}_n')$
-***Definición 7 (matriz simétrica)***: Una matriz cuadrada es simétrica si y solo si $\mathbf{A}'=\mathbf{A}$. Si $\mathbf{X}$ es una matriz $n\times k$, $\mathbf{X}'\mathbf{X}$ siempre está definida y es una matriz simétrica.
+\end{bmatrix}$$ Entonces $\mathbf{A}'=(\mathbf{a}_1'\mathbf{a}_2'...\mathbf{a}_n')$ ***Definición 7 (matriz simétrica)***: Una matriz cuadrada es simétrica si y solo si $\mathbf{A}'=\mathbf{A}$. Si $\mathbf{X}$ es una matriz $n\times k$, $\mathbf{X}'\mathbf{X}$ siempre está definida y es una matriz simétrica.
 
 ### Multiplicación de matrices particionadas
 
@@ -544,10 +579,9 @@ $$\mathbf{A}=\begin{bmatrix}
 \vdots\\
 \mathbf{b}_n\end{bmatrix}$$
 
-se tiene 
+se tiene
 
-$$\mathbf{A}'\mathbf{B}=\sum_{i=1}^n\mathbf{a}_i'b_i$$
-Adicionalmente,
+$$\mathbf{A}'\mathbf{B}=\sum_{i=1}^n\mathbf{a}_i'b_i$$ Adicionalmente,
 
 $$\mathbf{A}'\mathbf{A}=\sum_{i=1}^n\mathbf{a}_i'\mathbf{a}_i$$
 
@@ -563,7 +597,7 @@ $$\mathbf{A}=\begin{pmatrix}
 \mathbf{B}_{21} & \mathbf{B}_{22}
 \end{pmatrix}$$
 
-donde $\mathbf{A}_{11}$ es de tamaño $m_1\times n_1$, $\mathbf{A}_{12}$ es $m_1\times n_2$, $\mathbf{A}_{21}$ es $m_2\times n_1$, $\mathbf{A}_{22}$ es $m_2\times n_2$, $\mathbf{B}_{11}$ es $n_1\times p_1$, $\mathbf{B}_{12}$ es $n_1\times p_2$, $\mathbf{B}_{21}$ es $n_2\times p_1$ y $\mathbf{B}_{22}$ es $n_2\times p_2$. $m_1+m_2=m$, $n_1+n_2=n$ y $p_1+p_2=p$. Al multiplicar se llega a 
+donde $\mathbf{A}_{11}$ es de tamaño $m_1\times n_1$, $\mathbf{A}_{12}$ es $m_1\times n_2$, $\mathbf{A}_{21}$ es $m_2\times n_1$, $\mathbf{A}_{22}$ es $m_2\times n_2$, $\mathbf{B}_{11}$ es $n_1\times p_1$, $\mathbf{B}_{12}$ es $n_1\times p_2$, $\mathbf{B}_{21}$ es $n_2\times p_1$ y $\mathbf{B}_{22}$ es $n_2\times p_2$. $m_1+m_2=m$, $n_1+n_2=n$ y $p_1+p_2=p$. Al multiplicar se llega a
 
 $$\mathbf{AB}=\begin{pmatrix}
 \mathbf{A}_{11}\mathbf{B}_{11} + \mathbf{A}_{12}\mathbf{B}_{21} & \mathbf{A}_{11}\mathbf{B}_{12} +\mathbf{A}_{12}\mathbf{B}_{22} \\
@@ -606,13 +640,14 @@ print(AB)
 
 Esta es una operación definida solo para matrices simétricas.
 
-***Definición 8 (traza)***: para cualquier matriz $n\times n$ $\mathbf{A}$, la traza de la matriz $\mathbf{A}$  denotada como $\text{tr}(\mathbf{A})$ es la suma de los elementos de la diagonal. Matemáticamente
+***Definición 8 (traza)***: para cualquier matriz $n\times n$ $\mathbf{A}$, la traza de la matriz $\mathbf{A}$ denotada como $\text{tr}(\mathbf{A})$ es la suma de los elementos de la diagonal. Matemáticamente
 
 $$\text{tr}(\mathbf{A})=\sum_{i=1}^n a_{ii}$$
 
 ***Propiedades de la traza***:
 
-1. $\text{tr}(\mathbf{I}_n)=n$
+1.  $\text{tr}(\mathbf{I}_n)=n$
+
 ```{r}
 # Crear una matriz identidad de tamaño n
 n <- 4
@@ -625,7 +660,8 @@ trace_I_n <- sum(diag(I_n))
 print(paste("tr(I_n) =", trace_I_n))
 
 ```
-2. $\text{tr}(\mathbf{A}')=\text{tr}(\mathbf{A})$
+
+2.  $\text{tr}(\mathbf{A}')=\text{tr}(\mathbf{A})$
 
 ```{r}
 # Crear una matriz A de 3x3
@@ -640,7 +676,9 @@ print(paste("tr(A) =", trace_A))
 print(paste("tr(A') =", trace_A_transpose))
 
 ```
-3. $\text{tr}(\mathbf{A} + \mathbf{B})=\text{tr}(\mathbf{A})+\text{tr}(\mathbf{B})$
+
+3.  $\text{tr}(\mathbf{A} + \mathbf{B})=\text{tr}(\mathbf{A})+\text{tr}(\mathbf{B})$
+
 ```{r}
 # Crear dos matrices A y B de 3x3
 B <- matrix(c(9, 8, 7, 6, 5, 4, 3, 2, 1), nrow = 3, ncol = 3)
@@ -657,7 +695,9 @@ print(paste("tr(A + B) =", trace_A_plus_B))
 print(paste("tr(A) + tr(B) =", trace_A + trace_B))
 
 ```
-4. $\text{tr}(\alpha\mathbf{A})=\alpha \text{tr}(\mathbf{A})$
+
+4.  $\text{tr}(\alpha\mathbf{A})=\alpha \text{tr}(\mathbf{A})$
+
 ```{r}
 # Escalar alfa
 alpha <- 2
@@ -672,7 +712,9 @@ print(paste("tr(alpha * A) =", trace_alpha_A))
 print(paste("alpha * tr(A) =", trace_alpha_times_A))
 
 ```
-5. $\text{tr}(\mathbf{AB})=\text{tr}(\mathbf{BA})$ donde $\mathbf{A}$ es de tamaño $m\times n$ y $\mathbf{B}$ es de tamaño $n\times m$.
+
+5.  $\text{tr}(\mathbf{AB})=\text{tr}(\mathbf{BA})$ donde $\mathbf{A}$ es de tamaño $m\times n$ y $\mathbf{B}$ es de tamaño $n\times m$.
+
 ```{r}
 # Crear una matriz A de 3x2 y una matriz B de 2x3
 A <- matrix(c(1, 2, 3, 4, 5, 6), nrow = 3, ncol = 2)
@@ -696,8 +738,9 @@ La noción de matriz inversa es importante para las matrices cuadradas.
 
 ***Propiedades de la inversa***:
 
-1. Si la inversa existe, esta es única.
-2. $(\alpha \mathbf{A}^{-1})=(1/\alpha)\mathbf{A}^{-1}$ si $\alpha\neq 0$ y $\mathbf{A}$ es invertible.
+1.  Si la inversa existe, esta es única.
+2.  $(\alpha \mathbf{A}^{-1})=(1/\alpha)\mathbf{A}^{-1}$ si $\alpha\neq 0$ y $\mathbf{A}$ es invertible.
+
 ```{r}
 # Crear una matriz A de 2x2 invertible
 A <- matrix(c(4, 7, 2, 6), nrow = 2, ncol = 2)
@@ -716,7 +759,9 @@ print("Derecha: (1 / alpha) * A^-1")
 print(right_side)
 
 ```
-3. $\mathbf{AB}^{-1}=\mathbf{B}^{-1}\mathbf{A}^{-1}$, si tanto $A$ como $B$ son matrices $n\times n$ e invertibles.
+
+3.  $\mathbf{AB}^{-1}=\mathbf{B}^{-1}\mathbf{A}^{-1}$, si tanto $A$ como $B$ son matrices $n\times n$ e invertibles.
+
 ```{r}
 # Crear dos matrices A y B de 2x2 invertibles
 A <- matrix(c(1, 2, 3, 4), nrow = 2, ncol = 2)
@@ -733,7 +778,9 @@ print("Derecha: B^-1 * A^-1")
 print(right_side)
 
 ```
-4. $\left(\mathbf{A}'\right)^{-1}=\left(\mathbf{A}^{-1}\right)'$
+
+4.  $\left(\mathbf{A}'\right)^{-1}=\left(\mathbf{A}^{-1}\right)'$
+
 ```{r}
 # Crear una matriz A de 2x2 invertible
 A <- matrix(c(4, 7, 2, 6), nrow = 2, ncol = 2)
@@ -749,6 +796,7 @@ print("Derecha: (A')^-1")
 print(right_side)
 
 ```
+
 ## Independencia lineal y rango de una matriz
 
 Para un conjunto de vectores que tienen la misma dimensión, es importante saber si un vector puede ser expresado como una combinación lineal de los otros vectores.
@@ -759,9 +807,7 @@ $$\alpha_1\mathbf{x}_1+\alpha_2\mathbf{x}_2+...+\alpha_r\mathbf{x}_r=\mathbf{0}$
 
 implica que $\alpha_1=\alpha_2=...=\alpha_r=0$. Si la definición 2 se mantiene para un conjunto de escalares que no son cero, entonces $\{\mathbf{x}_1,\mathbf{x}_2,...,\mathbf{x}_r\}$ es linealmente dependiente. Esta afirmación es equivalente a decir que al menos un vector en este conjunto puede ser escrito como una combinación de los otros.
 
-***Definición 11 (rango)***:
-1. Sea $\mathbf{A}$ una matriz $n\times m$. El rango de la matriz $\mathbf{A}$ es el número máximo de columnas linealmente independientes de $\mathbf{A}$.
-2. Si $\mathbf{A}$ es un matriz $n\times m$ y el $\text{rank}(\mathbf{A})=m$, entonces $\mathbf{A}$ tiene rango de columnas completo. Un ejemplo con la matriz
+***Definición 11 (rango)***: 1. Sea $\mathbf{A}$ una matriz $n\times m$. El rango de la matriz $\mathbf{A}$ es el número máximo de columnas linealmente independientes de $\mathbf{A}$. 2. Si $\mathbf{A}$ es un matriz $n\times m$ y el $\text{rank}(\mathbf{A})=m$, entonces $\mathbf{A}$ tiene rango de columnas completo. Un ejemplo con la matriz
 
 $$\begin{bmatrix}
 7 & 1 & 5 \\
@@ -783,6 +829,7 @@ rank_A <- qr_decomp$rank
 print(paste("El rango de la matriz A es:", rank_A))
 
 ```
+
 La siguiente no tiene rango completo
 
 $$\begin{bmatrix}
@@ -816,9 +863,9 @@ print(paste("El rango de la matriz A es:", rank_A))
 
 ***Propiedades del rango***:
 
-1. $\text{rank}(\mathbf{A}')=\text{rank}(\mathbf{A})$
-2. Si $\mathbf{A}$ es de tamaño $n\times k$, entonces $\text{rank}(\mathbf{A})\leq \min(n,k)$ 
-3. Si $\mathbf{A}$ es de tamaño $k \times k$ y $\text{rank}(\mathbf{A})$, entonces $\mathbf{A}$ es invertible.
+1.  $\text{rank}(\mathbf{A}')=\text{rank}(\mathbf{A})$
+2.  Si $\mathbf{A}$ es de tamaño $n\times k$, entonces $\text{rank}(\mathbf{A})\leq \min(n,k)$
+3.  Si $\mathbf{A}$ es de tamaño $k \times k$ y $\text{rank}(\mathbf{A})$, entonces $\mathbf{A}$ es invertible.
 
 ## Formas cuadráticas y matrices positivas definidas
 
@@ -826,8 +873,7 @@ print(paste("El rango de la matriz A es:", rank_A))
 
 $$f(\mathbf{x})=\mathbf{x}'\mathbf{A}\mathbf{x}=\sum_{i=1}^n a_{ii}x_i^2+2\sum_{i=1}^n\sum_{j>1}^na_{ij}x_ix_j$$
 
-***Definición 13 (positiva definida y positiva semi-definida)***:
-1. Una matriz simétrica $\mathbf{A}$ es positiva definida si
+***Definición 13 (positiva definida y positiva semi-definida)***: 1. Una matriz simétrica $\mathbf{A}$ es positiva definida si
 
 $$\mathbf{x}'\mathbf{A}\mathbf{x}>0 \text{ para todos los vectores de tamaño }n\times 1 \text{ excepto }\mathbf{x}=\mathbf{0}$$
 
@@ -857,9 +903,10 @@ if (result > 0) {
 }
 ```
 
-2. Una matriz simétrica $\mathbf{A}$ es positiva semidefinida si 
+2.  Una matriz simétrica $\mathbf{A}$ es positiva semidefinida si
 
 $$\mathbf{x}'\mathbf{A}\mathbf{x}\geq 0 \text{ para todos los vectores de tamaño }n\times 1$$
+
 ```{r}
 # Definir una matriz simétrica positiva semidefinida
 B <- matrix(c(1, -1, -1, 1), nrow = 2, byrow = TRUE)
@@ -886,17 +933,18 @@ if (result >= 0) {
 }
 
 ```
+
 Si una matriz es positiva definida o positiva semidefinida, se asume automáticamente que es simétrica.
+
 ***Propiedades de matrices positiva definida y positiva semi-definida***:
 
-1. Los elementos de la diagonal de una matriz positiva definida son estrictamente positivos, mientras que los elementos de la diagonal de una matriz positiva definida son no-negativos.
-2. Si $\mathbf{A}$ es positiva definida entonces $\mathbf{A}^{-1}$ existe y también es positiva definida.
-3. Si $\mathbf{X}$ es de tamaño $n\times k$ entonces $\mathbf{X}'\mathbf{X}$ y $\mathbf{X}\mathbf{X}'$ son positivas semidefinidas.
-4. Si $\mathbf{X}$ es de tamaño $n\times k$ y $\text{rank}(\mathbf{X})=k$, entonces $\mathbf{X}'\mathbf{X}$ es positiva definida (y por tanto no singular).
-
+1.  Los elementos de la diagonal de una matriz positiva definida son estrictamente positivos, mientras que los elementos de la diagonal de una matriz positiva definida son no-negativos.
+2.  Si $\mathbf{A}$ es positiva definida entonces $\mathbf{A}^{-1}$ existe y también es positiva definida.
+3.  Si $\mathbf{X}$ es de tamaño $n\times k$ entonces $\mathbf{X}'\mathbf{X}$ y $\mathbf{X}\mathbf{X}'$ son positivas semidefinidas.
+4.  Si $\mathbf{X}$ es de tamaño $n\times k$ y $\text{rank}(\mathbf{X})=k$, entonces $\mathbf{X}'\mathbf{X}$ es positiva definida (y por tanto no singular).
 
 ## Matrices idempotentes
- 
+
 ***Definición 14 (matriz idempotente)***: sea $\mathbf{A}$ una matriz simétrica de tamaño $n\times n$. Entonces se dice ue la matriz es idempotente si y solo si $\mathbf{A}\mathbf{A}=\mathbf{A}$.
 
 Por ejemplo,
@@ -907,18 +955,18 @@ $$\begin{bmatrix}
 0 & 0 & 1
 \end{bmatrix}$$
 
-es una matriz idempotente. 
+es una matriz idempotente.
+
 ***Propiedades de las matrices idempotentes***: sea $\mathbf{A}$ una matriz de tamaño $n\times n$ una matriz idempotente
 
-1. $\text{rank}(\mathbf{A})=\text{tr}(\mathbf{A})$
-2. $\mathbf{A}$ es positiva semidefinida.
+1.  $\text{rank}(\mathbf{A})=\text{tr}(\mathbf{A})$
+2.  $\mathbf{A}$ es positiva semidefinida.
 
 ## Diferenciación de formas lineales y cuadráticas
 
 Para un vector $\mathbf{a}$ de tamaño $n\times 1$, considere la función lineal definida por
 
-$$f(\mathbf{x})=\mathbf{a}'\mathbf{x}$$
-para todos los vectores de tamaño $n\times 1$. La derivada de $f$ con respecto a $\mathbf{x}$ es el vector de tamaño $1\times n$ de derivadas parciales
+$$f(\mathbf{x})=\mathbf{a}'\mathbf{x}$$ para todos los vectores de tamaño $n\times 1$. La derivada de $f$ con respecto a $\mathbf{x}$ es el vector de tamaño $1\times n$ de derivadas parciales
 
 $$\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}=\mathbf{a}'$$
 
@@ -928,23 +976,20 @@ $$g(\mathbf{x})=\mathbf{x}'\mathbf{A}\mathbf{x}$$
 
 Entonces,
 
-$$\frac{\partial g(\mathbf{x})}{\partial \mathbf{x}}=2\mathbf{x}'\mathbf{A}$$
-que es un vector de tamaño $1\times n$.
+$$\frac{\partial g(\mathbf{x})}{\partial \mathbf{x}}=2\mathbf{x}'\mathbf{A}$$ que es un vector de tamaño $1\times n$.
 
 ## Momentos y distribuciones de vectores aleatorios
 
-Ahora hay que definir el valor esperado y la varianza de un vector aleatorio. Como sugiere su nombre, el vector aleatorio es simplemente un vector de variables aleatorias.  
+Ahora hay que definir el valor esperado y la varianza de un vector aleatorio. Como sugiere su nombre, el vector aleatorio es simplemente un vector de variables aleatorias.
 
 ### Valor esperado
 
-***Definición 15 (valor esperado)***: 
-1. Si $\mathbf{y}$ es un vector aleatorio de tamaño $n\times 1$, el valor esperado de $\mathbf{y}$, denotado como $\mathbb{E}(\mathbf{y})$, es el vector de valores esperados: $\mathbb{E}(\mathbf{y})=[\mathbb{E}(y_1), \mathbb{E}(y_2),...,\mathbb{E}(y_n)]'$.
-2. Si $\mathbf{Z}$ es una matriz aleatoria de tamaño $n\times m$, $\mathbb{E}(\mathbf{Z})$ es la matriz de tamaño $n\times m$ de valores esperados $\mathbb{E}(\mathbf{Z})=[\mathbf{E}(z_{ij})]$.
+***Definición 15 (valor esperado)***: 1. Si $\mathbf{y}$ es un vector aleatorio de tamaño $n\times 1$, el valor esperado de $\mathbf{y}$, denotado como $\mathbb{E}(\mathbf{y})$, es el vector de valores esperados: $\mathbb{E}(\mathbf{y})=[\mathbb{E}(y_1), \mathbb{E}(y_2),...,\mathbb{E}(y_n)]'$. 2. Si $\mathbf{Z}$ es una matriz aleatoria de tamaño $n\times m$, $\mathbb{E}(\mathbf{Z})$ es la matriz de tamaño $n\times m$ de valores esperados $\mathbb{E}(\mathbf{Z})=[\mathbf{E}(z_{ij})]$.
 
 ***Propiedades del valor esperado***:
 
-1. Si $\mathbf{A}$ es una matriz de tamaño $m\times n$ y $\mathbf{b}$ es un vector de tamaño $n\times 1$, donde ambos son no aleatorios, entonces $\mathbb{E}(\mathbf{Ay}+\mathbf{b})=\mathbf{A}\mathbb{E}(\mathbf{y})+\mathbf{b}$
-2. Si $\mathbf{A}$ es una matriz de tamaño $p\times n$ y $\mathbf{B}$ es una matriz de $m\times k$ donde ambos son no aleatorios, entonces $\mathbb{E}(\mathbf{AZB})=\mathbf{A}\mathbb{E}(\mathbf{Z})\mathbf{B}$
+1.  Si $\mathbf{A}$ es una matriz de tamaño $m\times n$ y $\mathbf{b}$ es un vector de tamaño $n\times 1$, donde ambos son no aleatorios, entonces $\mathbb{E}(\mathbf{Ay}+\mathbf{b})=\mathbf{A}\mathbb{E}(\mathbf{y})+\mathbf{b}$
+2.  Si $\mathbf{A}$ es una matriz de tamaño $p\times n$ y $\mathbf{B}$ es una matriz de $m\times k$ donde ambos son no aleatorios, entonces $\mathbb{E}(\mathbf{AZB})=\mathbf{A}\mathbb{E}(\mathbf{Z})\mathbf{B}$
 
 ### Matriz de varianzas y covarianzas
 
@@ -959,42 +1004,40 @@ $$\text{Var}(\mathbf{y})=\begin{bmatrix}
 
 ***Propiedades de la varianza***:
 
-1. Si $\mathbf{a}$ es un vector no aleatorio de tamaño $n\times 1$, entonces $\text{Var}(\mathbf{a}'\mathbf{y})=\mathbf{a}'[\text{Var}(\mathbf{y})]\mathbf{a}\geq 0$. 
-2. Si $\text{Var}(\mathbf{a}'\mathbf{y})>0$ para todo $\mathbf{a}\neq\mathbf{0}$, $\text{Var}(\mathbf{y})$ es positiva definida.
-3. $\text{Var}(\mathbf{y})=\mathbb{E}[(\mathbf{y}-\mathbb{E}(\mathbf{y}))'(\mathbf{y}-\mathbb{E}(\mathbf{y}))]$
-4. Si los elementos $\mathbb{y}$ no están correlacionados, $\text{Var}(\mathbf{y})$ es una matriz diagonal. Si, en adición, $\text{Var}(y_j)=\mathbf{\sigma}^2$ para $j=1,2,...,n$, entonces $\text{Var}(\mathbf{y})=\mathbf{\sigma}^2\mathbf{I}_n$.
-5. Si $\mathbf{A}$ es una matriz no aleatoria de tamaño $m\times n$ y $\mathbf{b}$ es un vector no aleatorio de tamaño $n\times 1$, entonces $\text{Var}(\mathbf{Ay}+\mathbf{b})=\mathbf{A}[\text{Var}(\mathbf{y})]\mathbf{A}'$
-
+1.  Si $\mathbf{a}$ es un vector no aleatorio de tamaño $n\times 1$, entonces $\text{Var}(\mathbf{a}'\mathbf{y})=\mathbf{a}'[\text{Var}(\mathbf{y})]\mathbf{a}\geq 0$.
+2.  Si $\text{Var}(\mathbf{a}'\mathbf{y})>0$ para todo $\mathbf{a}\neq\mathbf{0}$, $\text{Var}(\mathbf{y})$ es positiva definida.
+3.  $\text{Var}(\mathbf{y})=\mathbb{E}[(\mathbf{y}-\mathbb{E}(\mathbf{y}))'(\mathbf{y}-\mathbb{E}(\mathbf{y}))]$
+4.  Si los elementos $\mathbb{y}$ no están correlacionados, $\text{Var}(\mathbf{y})$ es una matriz diagonal. Si, en adición, $\text{Var}(y_j)=\mathbf{\sigma}^2$ para $j=1,2,...,n$, entonces $\text{Var}(\mathbf{y})=\mathbf{\sigma}^2\mathbf{I}_n$.
+5.  Si $\mathbf{A}$ es una matriz no aleatoria de tamaño $m\times n$ y $\mathbf{b}$ es un vector no aleatorio de tamaño $n\times 1$, entonces $\text{Var}(\mathbf{Ay}+\mathbf{b})=\mathbf{A}[\text{Var}(\mathbf{y})]\mathbf{A}'$
 
 ### Distribución normal multivariada
 
 Si $\mathbf{y}$ es un vector aleatorio normal multivariado de tamaño $n\times 1$ con media $\mathbf{\mu}$ y matriz de varianzas y covarianzas $\mathbf{\Sigma}$, entonces se escribe
 
-$$\mathbf{y}\sim Normal(\mathbf{\mu},\mathbf{\Sigma})$$
+$$\mathbf{y}\sim Normal(\pmb{\mu},\pmb{\Sigma})$$
 
 ***Propiedades de la distribución normal multivariada***:
 
-1. Si $\mathbf{y}\sim Normal(\mathbf{\mu},\mathbf{\Sigma})$, entonces cada elemento de $\mathbf{y}$ está distribuida normalmente
-2. Si $\mathbf{y}\sim Normal(\mathbf{\mu},\mathbf{\Sigma})$ entonces $y_i$ y $y_j$, cualesquiera dos elementos de $\mathbf{y}$ son independientes si y solo si, no están correlacionados, esto es $\sigma_{ij}=0$
-3. Si $\mathbf{y}\sim Normal(\mathbf{\mu},\mathbf{\Sigma})$ entonces $\mathbf{Ay}+\mathbf{b}\sim Normal(\mathbf{A\mu} + \mathbf{b},\mathbf{A\Sigma A'})$ donde $\mathbf{A}$ y $\mathbf{b}$ son no aleatorios
-4. Si $\mathbf{y}\sim Normal(\mathbf{0},\mathbf{\Sigma})$, entonces para matrices no aleatorias $\mathbf{A}$ y $\mathbf{B}$, $\mathbf{Ay}$ y $\mathbf{By}$ son independientes si y solo si, $\mathbf{A\Sigma B'}=\mathbf{0}$. En particular, si $\Sigma=\mathbf{\sigma}^2\mathbf{I}_n$, entonces $\mathbf{AB}'=\mathbf{0}$ es necesaria y suficiente para independencia de $\mathbf{Ay}$ y $\mathbf{By}$.
-5. Si $\mathbf{y}\sim Normal(\mathbf{0},\sigma^2 \mathbf{I}_n)$, $\mathbf{A}$ es una matriz de tamaño $k\times n$, y $\mathbf{B}$ es una matriz simétrica e idempotente de $n\times n$, entonces $\mathbf{Ay}$ y $\mathbf{y'By}$ son independientes si y solo si $\mathbf{AB}=\mathbf{0}$
-6. Si $\mathbf{y}\sim Normal(\mathbf{0},\sigma^2 \mathbf{I}_n)$ y $\mathbf{A}$ y $\mathbf{B}$ son matrices simétricas, idempotentes y no aleatorias, entonces $\mathbf{y'Ay}$ y $\mathbf{y'By}$ son independientes si y solo si $\mathbf{AB}=\mathbf{0}$.
-
+1.  Si $\mathbf{y}\sim Normal(\pmb{\mu},\pmb{\Sigma})$, entonces cada elemento de $\mathbf{y}$ está distribuida normalmente
+2.  Si $\mathbf{y}\sim Normal(\pmb{\mu},\pmb{\Sigma})$ entonces $y_i$ y $y_j$, cualesquiera dos elementos de $\mathbf{y}$ son independientes si y solo si, no están correlacionados, esto es $\sigma_{ij}=0$
+3.  Si $\mathbf{y}\sim Normal(\pmb{\mu},\pmb{\Sigma})$ entonces $\mathbf{Ay}+\mathbf{b}\sim Normal(\mathbf{A\mu} + \mathbf{b},\mathbf{A\Sigma A'})$ donde $\mathbf{A}$ y $\mathbf{b}$ son no aleatorios
+4.  Si $\mathbf{y}\sim Normal(\mathbf{0},\pmb{\Sigma})$, entonces para matrices no aleatorias $\mathbf{A}$ y $\mathbf{B}$, $\mathbf{Ay}$ y $\mathbf{By}$ son independientes si y solo si, $\mathbf{A\Sigma B'}=\mathbf{0}$. En particular, si $\Sigma=\mathbf{\sigma}^2\mathbf{I}_n$, entonces $\mathbf{AB}'=\mathbf{0}$ es necesaria y suficiente para independencia de $\mathbf{Ay}$ y $\mathbf{By}$.
+5.  Si $\mathbf{y}\sim Normal(\mathbf{0},\sigma^2 \mathbf{I}_n)$, $\mathbf{A}$ es una matriz de tamaño $k\times n$, y $\mathbf{B}$ es una matriz simétrica e idempotente de $n\times n$, entonces $\mathbf{Ay}$ y $\mathbf{y'By}$ son independientes si y solo si $\mathbf{AB}=\mathbf{0}$
+6.  Si $\mathbf{y}\sim Normal(\mathbf{0},\sigma^2 \mathbf{I}_n)$ y $\mathbf{A}$ y $\mathbf{B}$ son matrices simétricas, idempotentes y no aleatorias, entonces $\mathbf{y'Ay}$ y $\mathbf{y'By}$ son independientes si y solo si $\mathbf{AB}=\mathbf{0}$.
 
 ### Distribución $\chi^2$
 
-***Propiedades de la distribución $\chi^2$***:
+***Propiedades de la distribución*** $\chi^2$:
 
 Si $\mathbf{u}\sim Normal(\mathbf{0}, \mathbf{I}_n)$, entonces $\mathbf{u}'\mathbf{u}\sim \chi_n^2$.
 
-1. Si $\mathbf{u}\sim Normal(\mathbf{0}, \mathbf{I}_n)$ y $\mathbf{A}$ es un matriz simétrica e idempotente de tamaño $n\times n$ con $\text{rank}(\mathbf{A})=q$, entonces $\mathbf{u'Au}\sim \chi_q^2$.  
-2. Si $\mathbf{u}\sim Normal(\mathbf{0}, \mathbf{I}_n)$ y $\mathbf{A}$ es un matriz simétrica e idempotente de tamaño $n\times n$ tal que $\mathbf{AB}=\mathbf{0}$, entonces $\mathbf{u'Au}$ y $\mathbf{u'Bu}$ son variables aleatorias $\chi^2$ e independientes.
-3. Si $\mathbf{z}\sim Normal(\mathbf{0},\mathbf{C})$ donde $\mathbf{C}$ es una matriz no singular de tamaño $m\times n$, entonces $\mathbf{z}'\mathbf{C}^{-1}\mathbf{z}\sim \chi^2_m$.
+1.  Si $\mathbf{u}\sim Normal(\mathbf{0}, \mathbf{I}_n)$ y $\mathbf{A}$ es un matriz simétrica e idempotente de tamaño $n\times n$ con $\text{rank}(\mathbf{A})=q$, entonces $\mathbf{u'Au}\sim \chi_q^2$.\
+2.  Si $\mathbf{u}\sim Normal(\mathbf{0}, \mathbf{I}_n)$ y $\mathbf{A}$ es un matriz simétrica e idempotente de tamaño $n\times n$ tal que $\mathbf{AB}=\mathbf{0}$, entonces $\mathbf{u'Au}$ y $\mathbf{u'Bu}$ son variables aleatorias $\chi^2$ e independientes.
+3.  Si $\mathbf{z}\sim Normal(\mathbf{0},\mathbf{C})$ donde $\mathbf{C}$ es una matriz no singular de tamaño $m\times n$, entonces $\mathbf{z}'\mathbf{C}^{-1}\mathbf{z}\sim \chi^2_m$.
 
 ### Distribución $t$
 
-***Propiedad de la distribución $t$***: si $\mathbf{u}\sim Normal(\mathbf{0},\mathbf{I}_n)$, $\mathbf{c}$ es un vector no aleatorio de tamñao $n\times 1$, $\mathbf{A}$ es una matriz simétirca, idempotente, no aleatorio con rango $q$, de tamaño $n\times n$ y $\mathbf{Ac}=\mathbf{0}$, entonces 
+***Propiedad de la distribución*** $t$: si $\mathbf{u}\sim Normal(\mathbf{0},\mathbf{I}_n)$, $\mathbf{c}$ es un vector no aleatorio de tamñao $n\times 1$, $\mathbf{A}$ es una matriz simétirca, idempotente, no aleatorio con rango $q$, de tamaño $n\times n$ y $\mathbf{Ac}=\mathbf{0}$, entonces
 
 $$\frac{\mathbf{c'u}/(\mathbf{c'c})^{1/2}}{\mathbf{u'Au/q}}\sim t_q$$
 
@@ -1002,6 +1045,6 @@ $$\frac{\mathbf{c'u}/(\mathbf{c'c})^{1/2}}{\mathbf{u'Au/q}}\sim t_q$$
 
 La variable aleatoria $F$ se obtiene tomando dos variables independientes $\chi^2$ y encontrando el ratio entre ellas, estandarizando por los grados de libertad.
 
-***Propiedad de la distribución $F$***: si $\mathbf{u}\sim Normal(\mathbf{0}, \mathbf{I}_n)$ y $\mathbf{A}$ y $\mathbf{B}$ son matrices simétricas, idempotentes con $\text{rank}(\mathbf{A})=k_1$, $\text{rank}(\mathbf{B})=k_2$, $\mathbf{AB}=\mathbf{0}$ y tamaño $n\times n$, entonces
+***Propiedad de la distribución*** $F$: si $\mathbf{u}\sim Normal(\mathbf{0}, \mathbf{I}_n)$ y $\mathbf{A}$ y $\mathbf{B}$ son matrices simétricas, idempotentes con $\text{rank}(\mathbf{A})=k_1$, $\text{rank}(\mathbf{B})=k_2$, $\mathbf{AB}=\mathbf{0}$ y tamaño $n\times n$, entonces
 
 $$\frac{(\mathbf{u'Au}/k_1)}{(\mathbf{u'Bu}/k_2)}\sim F_{k_1,k_2}$$

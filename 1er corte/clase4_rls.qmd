@@ -10,9 +10,9 @@ execute:
 
 Usualmente, en econometría se trabaja con tres tipos de estructuras de datos:
 
-- Sección cruzada
-- Datos longitudinales
-- Series de tiempo
+-   Sección cruzada
+-   Datos longitudinales
+-   Series de tiempo
 
 ```{r include=TRUE}
 # Set up the plotting layout
@@ -61,11 +61,9 @@ Empezaremos con sección cruzada: una foto en un momento del tiempo. Para manten
 
 Se tiene la siguiente ecuación
 
-$$y=\beta_0+\beta_1x+u$$
-donde $y$ es la variable dependiente, $x$ es la variable independiente y $u$ es el término de error. La variable $y$ es lo que queremos explicar, $x$ es la variable con la cual explicamos $y$ y $u$ son todos aquellos elementos que explican a $y$, diferentes de $x$. $\beta_0$ es el intercepto y $\beta_1$ es la pendiente. Esta se conoce como la función de regresión poblacional. Si $\Delta u =0$, es decir, si el resto de los factores se mantiene constante, la variación vendrá dada por
+$$y=\beta_0+\beta_1x+u$$ donde $y$ es la variable dependiente, $x$ es la variable independiente y $u$ es el término de error. La variable $y$ es lo que queremos explicar, $x$ es la variable con la cual explicamos $y$ y $u$ son todos aquellos elementos que explican a $y$, diferentes de $x$. $\beta_0$ es el intercepto y $\beta_1$ es la pendiente. Esta se conoce como la función de regresión poblacional. Si $\Delta u =0$, es decir, si el resto de los factores se mantiene constante, la variación vendrá dada por
 
-$$\Delta y =\beta_1 \Delta x$$
-Esto podría tomarse como algo ingenuo. En algunas ocasiones se podría estar interesado en rendimientos crecientes a escala en lugar de efectos constantes. Deben realizarse algunos supuestos.
+$$\Delta y =\beta_1 \Delta x$$ Esto podría tomarse como algo ingenuo. En algunas ocasiones se podría estar interesado en rendimientos crecientes a escala en lugar de efectos constantes. Deben realizarse algunos supuestos.
 
 Para que se cumpla la variación se tiene que hacer un supuesto sobre la relación entre $x$ y $u$. Antes de eso, es necesario realizar un supuesto sin pérdida de generalidad sobre $u$:
 
@@ -83,28 +81,19 @@ $$\mathbb{E}(y|x)=\beta_0+\beta_1 x$$
 
 Primero haremos una estimación empleando el **método de momentos**. Sea $\{(x_i,y_i); i=1,...,n\}$ una muestra aleatoria de tamaño $n$ de la población. Como los datos provienen de la población se puede escribir
 
-$$y_i=\beta_0+\beta_1x_i+u_i$$
-para cada $i$. A partir de los supuestos anteriores
+$$y_i=\beta_0+\beta_1x_i+u_i$$ para cada $i$. A partir de los supuestos anteriores
 
-$$\text{Cov}(x,u)=\mathbb{E}(xu)=0$$
-$$E(u)=0$$
-Sustituyendo el valor de $u$ de la función de regresión poblacional se tiene
+$$\text{Cov}(x,u)=\mathbb{E}(xu)=0$$ $$E(u)=0$$ Sustituyendo el valor de $u$ de la función de regresión poblacional se tiene
 
-$$\mathbb{E}[x(y-\beta_0-\beta_1x_i)]=0$$
-$$\mathbb{E}(y-\beta_0-\beta_1x_i)=0$$
-Utilizando los momentos conocidos, se tiene
+$$\mathbb{E}[x(y-\beta_0-\beta_1x_i)]=0$$ $$\mathbb{E}(y-\beta_0-\beta_1x_i)=0$$ Utilizando los momentos conocidos, se tiene
 
-$$n^{-1}\sum_{i=1}^n(y_i-\hat{\beta}_0-\hat{\beta}_1x_i)=0$$
-$$n^{-1}\sum_{i=1}^nx_i(y_i-\hat{\beta}_0-\hat{\beta}_1x_i)$$
-Despejando se llega a
+$$n^{-1}\sum_{i=1}^n(y_i-\hat{\beta}_0-\hat{\beta}_1x_i)=0$$ $$n^{-1}\sum_{i=1}^nx_i(y_i-\hat{\beta}_0-\hat{\beta}_1x_i)$$ Despejando se llega a
 
-$$\hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}$$
-$$\hat{\beta}_1=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2}$$
+$$\hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}$$ $$\hat{\beta}_1=\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{\sum_{i=1}^n(x_i-\bar{x})^2}$$
 
 Si se emplean mínimos cuadrados, el resultado es el mismo. Con las estimaciones $\hat{\beta}_0$ y $\hat{\beta}_1$ se tiene la función de regresión muestral
 
-$$\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 x_i$$
-donde $\hat{\beta}_1=\frac{\Delta \hat{y}}{\Delta x}$. Esto en R es bastante simple. 
+$$\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1 x_i$$ donde $\hat{\beta}_1=\frac{\Delta \hat{y}}{\Delta x}$. Esto en R es bastante simple.
 
 ```{r include=TRUE}
 
@@ -151,57 +140,47 @@ par(mfrow = c(1, 1))
 
 ### Propiedades algebraicas de MCO
 
-Como punto de partida hay que generar los valores ajustados a partir de la ecuación 
+Como punto de partida hay que generar los valores ajustados a partir de la ecuación
 
-$$\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_i$$
-Dentro de estas propiedades, por definición, se tiene
+$$\hat{y}_i=\hat{\beta}_0+\hat{\beta}_1x_i$$ Dentro de estas propiedades, por definición, se tiene
 
-$$\sum_{i=1}^n \hat{u}_i=0$$
-$$\sum_{i=1}^nx_i\hat{u}_i=0$$
-$$y_i=\hat{y}_i+\hat{u}_i$$
-Con estas propiedades se pueden definir la suma de cuadrados totales (SST), la suma de cuadrados de los residuos (SSR) y la suma de cuadrados explicados (SSE):
+$$\sum_{i=1}^n \hat{u}_i=0$$ $$\sum_{i=1}^nx_i\hat{u}_i=0$$ $$y_i=\hat{y}_i+\hat{u}_i$$ Con estas propiedades se pueden definir la suma de cuadrados totales (SST), la suma de cuadrados de los residuos (SSR) y la suma de cuadrados explicados (SSE):
 
+```{=tex}
 \begin{align*}
 \text{SST} =&\sum_{i=1}^n(y_i-\bar{y})^2\\
 \text{SSE} =&\sum_{i=1}^n(\hat{y}_i-\bar{y})^2\\
 \text{SSR} =&\sum_{i=1}^n(\hat{u}_i)^2\\
 \end{align*}
-
+```
 Teniendo presente que $SST=SSE+SSR$.
 
 ### Bondad de ajuste
 
 $$R^2=1-\frac{SSR}{SST}\equiv \frac{SSE}{SST}$$
 
-El $R^2$ mide la fracción de la varianza muestral de $y$ que es explicada por $x$.
-## Unidad de medida y forma funcional
+El $R^2$ mide la fracción de la varianza muestral de $y$ que es explicada por $x$. \## Unidad de medida y forma funcional
 
-| Modelo    | Forma de $y$ |Forma de $x$|Efecto|
-|:--------:|:----:|:----:|:-----:|
-| nivel-nivel     | $y$  |    $x$     |$\Delta y=\beta_1 \Delta x$|
-| nivel-log   | $y$  |    $\log(x)$  |$\Delta y=(\beta_1/100)\% \Delta x$|
-| log-nivel     | $\log(y)$  |   $x$   |$\%\Delta y=(100\cdot\beta_1) \Delta x$|
-| log-log     | $\log(y)$  |    $\log(x)$   |$\%\Delta y=\beta_1 \%\Delta x$|
-
+|   Modelo    | Forma de $y$ | Forma de $x$ |                 Efecto                  |
+|:-----------:|:------------:|:------------:|:---------------------------------------:|
+| nivel-nivel |     $y$      |     $x$      |       $\Delta y=\beta_1 \Delta x$       |
+|  nivel-log  |     $y$      |  $\log(x)$   |   $\Delta y=(\beta_1/100)\% \Delta x$   |
+|  log-nivel  |  $\log(y)$   |     $x$      | $\%\Delta y=(100\cdot\beta_1) \Delta x$ |
+|   log-log   |  $\log(y)$   |  $\log(x)$   |     $\%\Delta y=\beta_1 \%\Delta x$     |
 
 ## Valor esperado y varianza en MCO
 
 ¿Por qué utilizar los estimadores de $\beta_0$ y de $\beta_1$ encontradas? Si se cumplen una serie de supuestos, son los mejores estimadores que se pueden emplear.
 
-1. Linealidad en los parámetros: en el modelo poblacional, la variable dependiente $y$ está relacionada con la variable independiente $x$ y el error $u$ de la forma
+1.  Linealidad en los parámetros: en el modelo poblacional, la variable dependiente $y$ está relacionada con la variable independiente $x$ y el error $u$ de la forma
 
-$$y=\beta_0+\beta_1 x + u$$
-donde $\beta_0$ y $\beta_1$ son los parámetros de intercepto y pendiente, respectivamente.
+$$y=\beta_0+\beta_1 x + u$$ donde $\beta_0$ y $\beta_1$ son los parámetros de intercepto y pendiente, respectivamente.
 
-2. Muestra aleatoria: se tiene una muestra aleatorio de tamaño $n$, $\{(x_i,y_i):i=1,2,...,n\}$, que sigue la función poblacional anterior. Se puede entonces reescribir a la función poblacional en términos de la muestra
+2.  Muestra aleatoria: se tiene una muestra aleatorio de tamaño $n$, $\{(x_i,y_i):i=1,2,...,n\}$, que sigue la función poblacional anterior. Se puede entonces reescribir a la función poblacional en términos de la muestra
 
-$$y_i=\beta_0+\beta_1 x_i + u\hspace{0.3cm}i=1,2,...,n$$
-3. Variación muestral de la variable explicativa: la muestra de $x$ no es constante.
-4. Media condicional cero:
+$$y_i=\beta_0+\beta_1 x_i + u\hspace{0.3cm}i=1,2,...,n$$ 3. Variación muestral de la variable explicativa: la muestra de $x$ no es constante. 4. Media condicional cero:
 
-
-$$\mathbb{E}(x|u)=0$$
-5. Homocedasticidad: el error $u$ tiene la misma varianza dado cualquier valor de la variable explicativa
+$$\mathbb{E}(x|u)=0$$ 5. Homocedasticidad: el error $u$ tiene la misma varianza dado cualquier valor de la variable explicativa
 
 $$\text{Var}(x|u)=\sigma^2$$
 
@@ -215,8 +194,7 @@ $$\mathbb{E}(\hat{\beta}_0)=\beta_0, \hspace{0.5cm}\mathbb{E}(\hat{\beta}_1)=\be
 
 Cuando se incluye el quinto supuesto, se tiene además que
 
-$$\mathbb{E}(y|x)=\beta_0 +\beta_1 x$$
-$$\text{Var}(y|x)=\sigma^2$$
+$$\mathbb{E}(y|x)=\beta_0 +\beta_1 x$$ $$\text{Var}(y|x)=\sigma^2$$
 
 Adicionalmente, la varianza de los estimadores sería
 
@@ -224,7 +202,7 @@ $$\text{Var}(\hat{\beta}_1)=\frac{\sigma^2}{\sum_{i=1}^n(x_i-\bar{x})^2}$$
 
 $$\text{Var}(\hat{\beta}_0)=\frac{\sigma^2n^{-1}\sum_{i=1}^nx_i^2}{\sum_{i=1}^n(x_i-\bar{x})^2}$$
 
-Teniendo en cuenta que 
+Teniendo en cuenta que
 
 $$\hat{\sigma}^2=\frac{1}{n-2}\sum_{i=1}^n\hat{u}_i^2=\frac{SSR}{n-2}$$
 
@@ -232,11 +210,9 @@ $$\hat{\sigma}^2=\frac{1}{n-2}\sum_{i=1}^n\hat{u}_i^2=\frac{SSR}{n-2}$$
 
 En algunos casos, se puede buscar imponer una restricción del tipo $x=0$, el valor esperado de $y$ será igual a 0. Se plantea entonces una función diferente
 
-$$\tilde{y}=\tilde{\beta}_1 x$$
-El obtener esta ecuación se conoce como regresión a través del origen porque la línea pasa a través del punto $x=0$, $\tilde{y}=0$. Para calcular la pendiente se puede recurrir a mínimos cuadrados ordinarios.
+$$\tilde{y}=\tilde{\beta}_1 x$$ El obtener esta ecuación se conoce como regresión a través del origen porque la línea pasa a través del punto $x=0$, $\tilde{y}=0$. Para calcular la pendiente se puede recurrir a mínimos cuadrados ordinarios.
 
 $$\sum_{i=1}^n(y_i-\tilde{\beta}_1x_i)^2$$
-
 
 $$\sum_{i=1}^n x_i(y_i-\tilde{\beta}_1x_i)=0$$
 
