@@ -76,7 +76,10 @@ $$\hat{\sigma}^2=\frac{\hat{\textbf{u}}'\hat{\textbf{u}}}{n-k-1}$$
 
 ### Consistencia
 
-
-
 ### Teorema de Frisch-Waugh-Lowell
+
+### Subestimación y sobrestimación del modelo
+
+### Multicolinealidad
+
 
