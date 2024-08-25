@@ -1,0 +1,13 @@
+---
+title: "Taller 2"
+format: html
+editor: pdf
+---
+
+1. Resuelva el problema 1 del capítulo 8 del libro de Wooldridge.
+
+2. Resuelva el problema C1 del capítulo 8 del libro de Wooldridge.
+
+3. Resuelva el problema 1 del capítulo 9 del libro de Wooldridge.
+
+4. Resuelva el problema C2 del capítulo 9 del libro de Wooldridge.

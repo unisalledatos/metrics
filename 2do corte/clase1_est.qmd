@@ -1,14 +1,46 @@
 ---
-title: "Inferencia"
-format: html
+title: "Estimación"
+format: pdf
 editor: visual
 ---
 
 ## Estimación por MCO
 
+$$\textbf{y} = \textbf{X}\beta + \textbf{u}$$
+
+$$\min_{\beta}\textbf{u}'\textbf{u}$$
+$$\min_{\beta}(\textbf{y} - \textbf{X}\beta)'(\textbf{y} - \textbf{X}\beta)$$
+
+$$\textbf{X}'\textbf{X}\beta=\textbf{X}'\textbf{y}$$
+$$\hat{\beta}=(\textbf{X}'\textbf{X})^{-1}\textbf{X}'\textbf{y}$$
 ### Estimación empleando matrices
 
+```{r}
+library(wooldridge)
+library(tidyverse)
+
+wage <- wage1 |> select(c(wage, educ, exper, tenure))
+
+y <- wage$wage
+X <- wage |> select(-c(wage))
+```
+Calculemos usando lo encontrado más arriba
+
+```{r}
+ones <- rep(1, 526)
+X <- cbind(ones, X)
+
+X <- as.matrix(X)
+y <- as.matrix(y)
+
+solve(t(X) %*% X) %*% t(X) %*% y
+```
 ### Estimación con R
+
+```{r}
+reg <- lm(wage ~ educ + exper + tenure, data = wage1)
+summary(reg)
+```
 
 ## Supuestos
 
@@ -24,10 +56,27 @@ editor: visual
 
 ## Propiedades
 
+### Insesgamiento
+
+$$\mathbb{E}(\hat{\beta}|\textbf{X})=\beta$$
+$$\hat{\beta}=(\textbf{X}'\textbf{X})^{-1}\textbf{X}'(\textbf{X}\beta + \textbf{u})$$
+$$\hat{\beta}=(\textbf{X}'\textbf{X})^{-1}\textbf{X}'\textbf{X}\beta + (\textbf{X}'\textbf{X})^{-1}\textbf{X}'\textbf{u}$$
+$$\hat{\beta}=\beta + (\textbf{X}'\textbf{X})^{-1}\textbf{X}'\textbf{u}$$
+$$\mathbb{E}(\hat{\beta}|\textbf{X})=\beta + (\textbf{X}'\textbf{X})^{-1}\textbf{X}'\mathbb{E}(\textbf{u}|\textbf{X})$$
+$$\mathbb{E}(\hat{\beta}|\textbf{X})=\beta + (\textbf{X}'\textbf{X})^{-1}\textbf{X}'\textbf{0}$$
+$$\mathbb{E}(\hat{\beta}|\textbf{X})=\beta$$
 ### Varianza de los estimadores de MCO
 
-### Insesgamiento
+$$\text{Var}(\hat{\beta}|\textbf{X})=\sigma^2(\textbf{X}'\textbf{X})^{-1}$$
+$$\text{Var}(\hat{\beta}|\textbf{X})=\text{Var}((\textbf{X}'\textbf{X})^{-1}\textbf{X}'\textbf{u}|\textbf{X})$$
+$$\text{Var}(\hat{\beta}|\textbf{X})=(\textbf{X}'\textbf{X})^{-1}\textbf{X}'\text{Var}(\textbf{u}|\textbf{X})\textbf{X}(\textbf{X}'\textbf{X})^{-1}$$
+$$\text{Var}(\hat{\beta}|\textbf{X})=(\textbf{X}'\textbf{X})^{-1}\textbf{X}'(\sigma^2\mathbf{I}_n)\textbf{X}(\textbf{X}'\textbf{X})^{-1}$$
+$$\text{Var}(\hat{\beta}|\textbf{X})=\sigma^2(\textbf{X}'\textbf{X})^{-1}$$
+$$\hat{\sigma}^2=\frac{\hat{\textbf{u}}'\hat{\textbf{u}}}{n-k-1}$$
 
 ### Consistencia
 
+
+
 ### Teorema de Frisch-Waugh-Lowell
+

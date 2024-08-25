@@ -1,0 +1,20 @@
+---
+title: "Taller 1"
+format: pdf
+editor: visual
+---
+
+1. ¿Cuáles de los siguientes puede causar que los estadísticos $t$ de MCO sean inválidos (que no tengan una distribuciòn $t$)?
+  - Heterocedasticidad
+  - Omitir una variable relevante
+
+2. Resuelva el ejercicio C6 del capítulo 4 del libro de Wooldridge.
+
+3. Resuelva el ejercicio 2 del capítulo 6 del libro de Wooldridge.
+
+4. Con los datos de la base `hprice1` del paquete `wooldridge`:
+  - Plantee un modelo que explique los precios de la vivienda
+  - Estime los coeficientes del modelo
+  - Interprete los coeficientes y comente la significancia estadística
+  - Escriba la ecuación de regresión
+  - Interprete el $R^2$
